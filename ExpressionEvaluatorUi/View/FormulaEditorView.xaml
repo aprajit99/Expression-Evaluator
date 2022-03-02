@@ -5,8 +5,156 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExpressionEvaluatorUi.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="1000">
+    
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0"
+                  Header="Step 1: Edit the Formula"
+                  Margin="1"
+                  Background="LightGray"
+                  FontWeight="Bold">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Header="Current Formula"
+                          Margin="1">
+                    <TextBox Grid.Column="0"
+                     Name="formulaTextBox" 
+                     Text="{Binding Formula, Mode=TwoWay}"
+                     FontSize="15"
+                     Margin="1"
+                     FontWeight="Light"  
+                     VerticalScrollBarVisibility="Visible"
+                     HorizontalScrollBarVisibility="Auto">
+                    </TextBox>
+                </GroupBox>
+                <Button x:Name="validateFormulaButton"
+                    Content="Validate Formula"
+                    Grid.Column="1"
+                    Height="25"
+                    Width="90"
+                    Margin="5"
+                    Padding="1"
+                    FontSize="11"
+                    FontWeight="Normal"
+                    BorderBrush="Black">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Steps"
+                      Background="LightGray"
+                      Margin="1"
+                      FontWeight="Bold">
+                <ListView x:Name="stepNamesListView"
+                          Grid.Column="0"
+                          Margin="2"
+                          ItemsSource="{Binding Steps}"
+                          SelectedValue="{Binding SelectedStep, Mode=TwoWay}"
+                          FontWeight="Normal">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Name" Width="120"  DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="Type" Width="120"  DisplayMemberBinding="{Binding Type}" />
+                            <GridViewColumn Header="Description"  DisplayMemberBinding="{Binding Description}" />
+                        </GridView>
+                    </ListView.View>
+
+                </ListView>
+            </GroupBox>
+            <GroupBox Header="Operators"
+                      Grid.Column="1"
+                      Background="LightGray"
+                      Margin="1"
+                      FontWeight="Bold">
+
+                <ListView x:Name="operatorsListView"
+                          Grid.Column="1"
+                          Margin="2"
+                          FontWeight="Normal"
+                          ItemsSource="{Binding operatorcollectionView}"
+                          SelectedValue="{Binding SelectedOperator}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Type" Width="50"  DisplayMemberBinding="{Binding Type}"/>
+                            <GridViewColumn Header="Description"  DisplayMemberBinding="{Binding Description}" />
+                        </GridView>
+                    </ListView.View>
+                    <ListView.GroupStyle>
+                        <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                </ListView>
+            </GroupBox>
+
+        </Grid>
+        <GroupBox Grid.Row="2"
+                  Header="Step 2: Test the Formula"
+                  Margin="1"
+                  Background="LightGray"
+                  FontWeight="Bold">
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ListView x:Name="inputGrid"
+                          Grid.Column="0"
+                          Margin="2"
+                          FontWeight="Normal">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Step Name" Width="120"  DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="Input" Width="120"  DisplayMemberBinding="{Binding Type}" />
+                        </GridView>
+                    </ListView.View>
+
+                </ListView>
+
+                <GroupBox Grid.Column="1"
+                          Header="Test Output">
+                    <TextBox Grid.Column="1"
+                         IsReadOnly="True"
+                         Margin="3"
+                         BorderThickness="2"
+                         FontWeight="Light"/>
+                </GroupBox>
+
+
+            </Grid>
+        </GroupBox>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="3"
+                    FlowDirection="RightToLeft">
+            <Button Content="Cancel"
+                    Padding="2"/>
+            <Button Content="OK"
+                    Padding="2"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="3"
+                    HorizontalAlignment="Left">
+            <Button Content="Run Test"
+                    Padding="2"/>
+            <Button Content="Print"
+                    Padding="2"/>
+        </StackPanel>
     </Grid>
 </UserControl>

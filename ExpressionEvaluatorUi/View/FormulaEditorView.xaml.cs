@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExpressionEvaluatorUi.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,7 @@ namespace ExpressionEvaluatorUi.View
         public FormulaEditorView()
         {
             InitializeComponent();
+            this.DataContext = new FormulaEditorViewModel();
         }
     }
 }
