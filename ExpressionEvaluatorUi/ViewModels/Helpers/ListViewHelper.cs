@@ -57,42 +57,42 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
 
             return operators;
         }
-        public static List<Step> getStepList()
+        public static List<Variable> getVariableList()
         {
-            List<Step> steps = new List<Step>();
-            steps.Add(new Step()
+            List<Variable> variables = new List<Variable>();
+            variables.Add(new Variable()
             {
-                Name = "Step1Name",
-                Type = "Step1Type",
-                Description = "Step1Description"
+                Name = "Variable1Name",
+                Type = "Variable1Type",
+                Description = "Variable1Description"
 
 
             });
-            steps.Add(new Step()
+            variables.Add(new Variable()
             {
-                Name = "Step2Name",
-                Type = "Step2Type",
-                Description = "Step2Description"
+                Name = "Variable2Name",
+                Type = "Variable2Type",
+                Description = "Variable2Description"
 
 
             });
-            steps.Add(new Step()
+            variables.Add(new Variable()
             {
-                Name = "Step3Name",
-                Type = "Step3Type",
-                Description = "Step3Description"
+                Name = "Variable3Name",
+                Type = "Variable3Type",
+                Description = "Variable3Description"
 
 
             });
-            steps.Add(new Step()
+            variables.Add(new Variable()
             {
-                Name = "Step4Name",
-                Type = "Step4Type",
-                Description = "Step4Description"
+                Name = "Variable4Name",
+                Type = "Variable4Type",
+                Description = "Variable4Description"
 
 
             });
-            return steps;
+            return variables;
         }
     }
 }

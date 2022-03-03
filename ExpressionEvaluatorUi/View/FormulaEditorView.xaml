@@ -59,15 +59,15 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Header="Steps"
+            <GroupBox Header="Variables"
                       Background="LightGray"
                       Margin="1"
                       FontWeight="Bold">
-                <ListView x:Name="stepNamesListView"
+                <ListView x:Name="variableNamesListView"
                           Grid.Column="0"
                           Margin="2"
-                          ItemsSource="{Binding Steps}"
-                          SelectedValue="{Binding SelectedStep, Mode=TwoWay}"
+                          ItemsSource="{Binding Variables}"
+                          SelectedValue="{Binding SelectedVariable, Mode=TwoWay}"
                           FontWeight="Normal">
                     <ListView.View>
                         <GridView>
@@ -121,7 +121,7 @@
                           FontWeight="Normal">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Step Name" Width="120"  DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="Variable Name" Width="120"  DisplayMemberBinding="{Binding Name}"/>
                             <GridViewColumn Header="Input" Width="120"  DisplayMemberBinding="{Binding Type}" />
                         </GridView>
                     </ListView.View>

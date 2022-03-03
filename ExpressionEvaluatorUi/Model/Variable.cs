@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ExpressionEvaluatorUi.Model
 {
-    public class Step
+    public class Variable
     {
         public string Name { get; set; }
         public string Type { get; set; }

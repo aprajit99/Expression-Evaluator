@@ -23,16 +23,16 @@ namespace ExpressionEvaluatorUi.ViewModels
             }
         }
 
-        private Step selectedStep;
+        private Variable selectedVariable;
 
-        public Step SelectedStep
+        public Variable SelectedVariable
         {
-            get { return selectedStep; }
+            get { return selectedVariable; }
             set
             {
-                selectedStep = value;
-                OnPropertyChanged("SelectedStep");
-                addStep();
+                selectedVariable = value;
+                OnPropertyChanged("SelectedVariable");
+                addVariable();
             }
         }
 
@@ -51,7 +51,7 @@ namespace ExpressionEvaluatorUi.ViewModels
 
 
 
-        public ObservableCollection<Step> Steps { get; set; }
+        public ObservableCollection<Variable> Variables { get; set; }
 
         public ListCollectionView operatorcollectionView { get; set; }
 
@@ -59,24 +59,24 @@ namespace ExpressionEvaluatorUi.ViewModels
 
         public FormulaEditorViewModel()
         {
-            Steps = new ObservableCollection<Step>();
+            Variables = new ObservableCollection<Variable>();
 
-            LoadSteps();
+            LoadVariables();
             LoadOperators();
 
         }
-        private void LoadSteps()
+        private void LoadVariables()
         {
 
-            List<Step> steplist = ListViewHelper.getStepList();
-            foreach (var step in steplist)
+            List<Variable> variablelist = ListViewHelper.getVariableList();
+            foreach (var variable in variablelist)
             {
-                Steps.Add(step);
+                Variables.Add(variable);
             }
         }
-        private void addStep()
+        private void addVariable()
         {
-            Formula = Formula + SelectedStep.Name.ToString();
+            Formula = Formula + SelectedVariable.Name.ToString();
         }
         private void LoadOperators()
         {
