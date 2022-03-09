@@ -94,5 +94,10 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
             });
             return variables;
         }
+        public static List<string> getVariableTypeList()
+        {
+            List<string> types = new List<string>() {"int","float","double","char","string","bool","object" };
+            return types;
+        }
     }
 }

@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExpressionEvaluatorUi.View"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1000">
+             d:DesignHeight="800" d:DesignWidth="1000"
+             MinHeight="500" MinWidth="700">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -63,8 +64,20 @@
                       Background="LightGray"
                       Margin="1"
                       FontWeight="Bold">
-                <ListView x:Name="variableNamesListView"
-                          Grid.Column="0"
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0"
+                            Content="Add Variable"
+                            Width="100"
+                            Margin="1"
+                            Padding="2"
+                            FontWeight="Normal"
+                            Command="{Binding AddVariableCommand}"/>
+                    <ListView x:Name="variableNamesListView"
+                          Grid.Row="1"
                           Margin="2"
                           ItemsSource="{Binding Variables}"
                           SelectedValue="{Binding SelectedVariable, Mode=TwoWay}"
@@ -78,6 +91,7 @@
                     </ListView.View>
 
                 </ListView>
+                </Grid>
             </GroupBox>
             <GroupBox Header="Operators"
                       Grid.Column="1"

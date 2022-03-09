@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:ExpressionEvaluatorUi.ResourceDictionaries">
+                    xmlns:local="clr-namespace:ExpressionEvaluatorUi.ResourceDictionaries" >
     <Style TargetType="GroupItem"
            x:Key="GroupHeaderStyle">
         <Setter Property="Template">

@@ -1,4 +1,6 @@
 ﻿using ExpressionEvaluatorUi.Model;
+using ExpressionEvaluatorUi.View;
+using ExpressionEvaluatorUi.ViewModels.Commands;
 using ExpressionEvaluatorUi.ViewModels.Helpers;
 using System;
 using System.Collections.Generic;
@@ -32,7 +34,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 selectedVariable = value;
                 OnPropertyChanged("SelectedVariable");
-                addVariable();
+                AddVariableToFormula();
             }
         }
 
@@ -45,36 +47,35 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 selectedOperator = value;
                 OnPropertyChanged("SelectedOperator");
-                addOperator();
+                AddOperatorToFormula();
             }
         }
 
 
 
-        public ObservableCollection<Variable> Variables { get; set; }
+        public static ObservableCollection<Variable> Variables { get; set; }
 
         public ListCollectionView operatorcollectionView { get; set; }
+        
+        public AddVariableCommand AddVariableCommand { get; set; }
+
+
 
 
 
         public FormulaEditorViewModel()
         {
             Variables = new ObservableCollection<Variable>();
-
-            LoadVariables();
             LoadOperators();
+            AddVariableCommand = new AddVariableCommand();
 
         }
-        private void LoadVariables()
+        public static void AddNewVariableToList(Variable Variable)
         {
-
-            List<Variable> variablelist = ListViewHelper.getVariableList();
-            foreach (var variable in variablelist)
-            {
-                Variables.Add(variable);
-            }
+            Variables.Add(Variable);
         }
-        private void addVariable()
+ 
+        private void AddVariableToFormula()
         {
             Formula = Formula + SelectedVariable.Name.ToString();
         }
@@ -85,7 +86,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             operatorcollectionView = new ListCollectionView(operatorlist);
             operatorcollectionView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
         }
-        private void addOperator()
+        private void AddOperatorToFormula()
         {
             Formula = Formula + SelectedOperator.Type.ToString();
         }
