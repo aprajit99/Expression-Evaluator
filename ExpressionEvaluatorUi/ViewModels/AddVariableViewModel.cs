@@ -80,13 +80,32 @@ namespace ExpressionEvaluatorUi.ViewModels
         }
         public void CreateNewVariable()
         {
-            Variable Variable = new Variable
+            //check if already present or not
+            bool isPresent = false;
+            foreach(var variable in FormulaEditorViewModel.Variables)
             {
-                Name=variableName,
-                Type=variableType,
-                Description=variableDescription
-            };
-            FormulaEditorViewModel.AddNewVariableToList(Variable);
+                if (variable.Name == variableName)
+                {
+                    isPresent = true;
+                    break;
+                }
+            }
+            if (!isPresent)
+            {
+                Variable Variable = new Variable
+                {
+                    Name = variableName,
+                    Type = variableType,
+                    Description = variableDescription
+                };
+                FormulaEditorViewModel.AddNewVariableToList(Variable);
+            }
+            else
+            {
+                MessageBox.Show("This Variable already exists!",
+                                "Invalid Variable Name",
+                                MessageBoxButton.OK,MessageBoxImage.Error);
+            }
             VariableName = String.Empty;
             VariableType = String.Empty;
             VariableDescription = String.Empty;

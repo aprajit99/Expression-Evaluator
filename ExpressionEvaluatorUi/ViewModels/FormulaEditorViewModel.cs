@@ -34,7 +34,27 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 selectedVariable = value;
                 OnPropertyChanged("SelectedVariable");
-                AddVariableToFormula();
+                if (SelectedVariable != null)
+                {
+                    bool isPresent = false;
+                    foreach (var variable in VariableInputViewModels)
+                    {
+                        if (variable.VariableName == SelectedVariable.Name)
+                        {
+                            isPresent = true;
+                            break;
+                        }
+                    }
+                    if (!isPresent)
+                    {
+                        VariableInputViewModels.Add(new VariableInputViewModel()
+                        {
+                            VariableName = SelectedVariable.Name
+                        });
+                    }
+                    AddVariableToFormula();
+                }
+                
             }
         }
 
@@ -47,7 +67,10 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 selectedOperator = value;
                 OnPropertyChanged("SelectedOperator");
-                AddOperatorToFormula();
+                if (SelectedOperator != null)
+                {
+                    AddOperatorToFormula();
+                }
             }
         }
 
@@ -59,13 +82,14 @@ namespace ExpressionEvaluatorUi.ViewModels
         
         public AddVariableCommand AddVariableCommand { get; set; }
 
-
+        public ObservableCollection<VariableInputViewModel> VariableInputViewModels { get; set; }
 
 
 
         public FormulaEditorViewModel()
         {
             Variables = new ObservableCollection<Variable>();
+            VariableInputViewModels = new ObservableCollection<VariableInputViewModel>();
             LoadOperators();
             AddVariableCommand = new AddVariableCommand();
 
@@ -78,6 +102,7 @@ namespace ExpressionEvaluatorUi.ViewModels
         private void AddVariableToFormula()
         {
             Formula = Formula + SelectedVariable.Name.ToString();
+            SelectedVariable = null;
         }
         private void LoadOperators()
         {
@@ -89,6 +114,7 @@ namespace ExpressionEvaluatorUi.ViewModels
         private void AddOperatorToFormula()
         {
             Formula = Formula + SelectedOperator.Type.ToString();
+            selectedOperator = null;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
