@@ -15,6 +15,10 @@ namespace ExpressionEvaluatorUi.ViewModels
         public bool VariableTypeChanged;
         private bool nameTypeChanged;
 
+        //
+        public static Action CloseWindow { get; set; }
+        //
+
         public bool NameTypeChanged
         {
             get { return nameTypeChanged; }
@@ -42,7 +46,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             }
         }
         
-        public static ObservableCollection<string> VariableTypes { get; set; }
+        public  ObservableCollection<string> VariableTypes { get; set; }
         
 
         private string variableType;
@@ -72,14 +76,18 @@ namespace ExpressionEvaluatorUi.ViewModels
             }
         }
         public SaveNewVariableCommand SaveNewVariableCommand { get; set; }
+        public CloseWindowCommand CloseWindowCommand { get; set; }
         public AddVariableViewModel()
         {
+            
             SaveNewVariableCommand = new SaveNewVariableCommand(this);
+            CloseWindowCommand = new CloseWindowCommand();
             VariableTypes = new ObservableCollection<string>();
             LoadVariableTypes();
         }
         public void CreateNewVariable()
         {
+            //TODO: use dictionary
             //check if already present or not
             bool isPresent = false;
             foreach(var variable in FormulaEditorViewModel.Variables)
@@ -112,6 +120,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             VariableNameChanged = false;
             VariableTypeChanged = false;
             NameTypeChanged = false;
+            
         }
 
         private void LoadVariableTypes()

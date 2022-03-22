@@ -69,13 +69,23 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Button Grid.Row="0"
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                    <Button 
                             Content="Add Variable"
                             Width="100"
                             Margin="1"
                             Padding="2"
                             FontWeight="Normal"
                             Command="{Binding AddVariableCommand}"/>
+                    <Button Content="Edit Variable"
+                            Width="100"
+                            Margin="1"
+                            Padding="2"
+                            FontWeight="Normal"
+                            CommandParameter="{Binding IsSelected}"
+                            Command="{Binding EditVariableCommand}"/>
+                    </StackPanel>
                     <ListView x:Name="variableNamesListView"
                           Grid.Row="1"
                           Margin="2"

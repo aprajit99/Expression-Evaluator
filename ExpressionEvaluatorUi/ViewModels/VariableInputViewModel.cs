@@ -19,9 +19,9 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged("VariableName");
             }
         }
-        private string variableInput;
+        private object variableInput;
 
-        public string VariableInput
+        public object VariableInput
         {
             get { return variableInput; }
             set

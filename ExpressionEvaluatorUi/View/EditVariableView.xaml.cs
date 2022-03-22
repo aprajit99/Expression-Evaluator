@@ -14,16 +14,15 @@ using System.Windows.Shapes;
 namespace ExpressionEvaluatorUi.View
 {
     /// <summary>
-    /// Interaction logic for AddVariableView.xaml
+    /// Interaction logic for EditVariableView.xaml
     /// </summary>
-    public partial class AddVariableView : Window
+    public partial class EditVariableView : Window
     {
-        public AddVariableView()
+        public EditVariableView()
         {
             InitializeComponent();
-            this.DataContext = new AddVariableViewModel();
-            AddVariableViewModel.CloseWindow = Close;
-
+            this.DataContext = new EditVariableViewModel();
+            EditVariableViewModel.CloseWindow = Close;
         }
     }
 }
