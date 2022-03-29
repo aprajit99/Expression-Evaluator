@@ -140,5 +140,6 @@ namespace ExpressionEvaluatorTests
             _func.Function = "'Test '";
             Assert.AreEqual("Test ", _func.Evaluate<string>());
         }
+        
     }
 }

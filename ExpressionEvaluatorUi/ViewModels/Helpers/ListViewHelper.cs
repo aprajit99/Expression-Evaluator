@@ -96,8 +96,13 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
         }
         public static List<string> getVariableTypeList()
         {
-            List<string> types = new List<string>() {"int","float","double","char","string","bool","object" };
-            return types;
+            List<string> VariableTypes = new List<string>() {"int","float","double","char","string","bool","object" };
+            return VariableTypes;
+        }
+        public static List<string> getOutputTypeList()
+        {
+            List<string> OutputTypes = new List<string>() {"numeric","string","boolean" };
+            return OutputTypes;
         }
     }
 }

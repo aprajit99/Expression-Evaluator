@@ -16,7 +16,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             set
             {
                 variableName = value;
-                OnPropertyChanged("VariableName");
+                OnPropertyChanged(nameof(VariableName));
             }
         }
         private object variableInput;
@@ -27,7 +27,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             set
             {
                 variableInput = value;
-                OnPropertyChanged("VariableInput");
+                OnPropertyChanged(nameof(VariableInput));
                 foreach(var variable in FormulaEditorViewModel.Variables)
                 {
                     if (variable.Name == VariableName)

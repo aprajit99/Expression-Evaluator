@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:ExpressionEvaluatorUi.View"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000"
@@ -29,7 +30,7 @@
                           Margin="1">
                     <TextBox Grid.Column="0"
                      Name="formulaTextBox" 
-                     Text="{Binding Formula, Mode=TwoWay}"
+                     Text="{Binding Formula, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      FontSize="15"
                      Margin="1"
                      FontWeight="Light"  
@@ -46,12 +47,15 @@
                     Padding="1"
                     FontSize="11"
                     FontWeight="Normal"
-                    BorderBrush="Black">
+                    BorderBrush="Black"
+                    CommandParameter="{Binding CanValidate}"
+                    Command="{Binding ValidateFormulaCommand}">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
                         </Style>
                     </Button.Resources>
+                    
                 </Button>
             </Grid>
         </GroupBox>
@@ -93,18 +97,18 @@
                           SelectedValue="{Binding SelectedVariable, Mode=TwoWay}"
                           FontWeight="Normal">
                     <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Name" Width="120"  DisplayMemberBinding="{Binding Name}"/>
-                            <GridViewColumn Header="Type" Width="120"  DisplayMemberBinding="{Binding Type}" />
-                            <GridViewColumn Header="Description" Width="250" DisplayMemberBinding="{Binding Description}" />
-                        </GridView>
+                            <GridView>
+                                <GridViewColumn Header="Name" Width="120"  DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Type" Width="120"  DisplayMemberBinding="{Binding Type}" />
+                                <GridViewColumn Header="Description" Width="250" DisplayMemberBinding="{Binding Description}" />
+                            </GridView>
                     </ListView.View>
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                             </Style>
-                        </ListView.ItemContainerStyle>
-
+                     </ListView.ItemContainerStyle>
+                        
                     </ListView>
                 </Grid>
             </GroupBox>
@@ -182,11 +186,31 @@
 
                 <GroupBox Grid.Column="1"
                           Header="Test Output">
-                    <TextBox Grid.Column="1"
-                         IsReadOnly="True"
-                         Margin="3"
-                         BorderThickness="2"
-                         FontWeight="Light"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center">
+                            <Label Content="Expected Output Type :  "
+                                   FontWeight="Normal"/>
+                            <ComboBox Width="150"
+                                      FontWeight="Normal"
+                                      ItemsSource="{Binding OutputTypes}"
+                                      SelectedItem="{Binding SelectedOutputType}">
+                            </ComboBox>
+                        </StackPanel>
+                        <TextBox Grid.Row="1"
+                                 IsReadOnly="True"
+                                 Margin="3"
+                                 BorderThickness="2"
+                                 FontSize="20"
+                                 FontWeight="Light"
+                                 Text="{Binding TestOutput}"/>
+                    </Grid>
                 </GroupBox>
 
 
@@ -204,9 +228,13 @@
                     Grid.Row="3"
                     HorizontalAlignment="Left">
             <Button Content="Run Test"
-                    Padding="2"/>
+                    Padding="2"
+                    CommandParameter="{Binding CanRunTest}"
+                    Command="{Binding RunTestCommand}"/>
             <Button Content="Print"
-                    Padding="2"/>
+                    Padding="2"
+                    CommandParameter="{Binding TestOutput}"
+                    Command="{Binding PrintCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -25,7 +25,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             set 
             {
                 nameTypeChanged = value;
-                OnPropertyChanged("NameTypeChanged");
+                OnPropertyChanged(nameof(NameTypeChanged));
             }
         }
 
@@ -39,7 +39,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             set 
             { 
                 variableName = value;
-                OnPropertyChanged("VariableName");
+                OnPropertyChanged(nameof(VariableName));
                 VariableNameChanged = true;
                 NameTypeChanged = VariableNameChanged & VariableTypeChanged;
                
@@ -58,7 +58,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             set
             {
                 variableType = value;
-                OnPropertyChanged("VariableType");
+                OnPropertyChanged(nameof(VariableType));
                 VariableTypeChanged = true;
                 NameTypeChanged = VariableNameChanged & VariableTypeChanged;
 
@@ -72,7 +72,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             set
             {
                 variableDescription = value;
-                OnPropertyChanged("VariableDescription");
+                OnPropertyChanged(nameof(VariableDescription));
             }
         }
         public SaveNewVariableCommand SaveNewVariableCommand { get; set; }

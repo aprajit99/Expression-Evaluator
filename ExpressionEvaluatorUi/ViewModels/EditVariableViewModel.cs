@@ -26,7 +26,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             set 
             { 
                 isChanged = value;
-                OnPropertyChanged("IsChanged");
+                OnPropertyChanged(nameof(IsChanged));
             }
         }
 
@@ -39,7 +39,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             set 
             { 
                 variableNewName = value;
-                OnPropertyChanged("VariableNewName");
+                OnPropertyChanged(nameof(VariableNewName));
                 IsChanged = true;
             }
         }
@@ -51,7 +51,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             set
             {
                 variableNewType = value;
-                OnPropertyChanged("variableNewType");
+                OnPropertyChanged(nameof(variableNewType));
                 IsChanged = true;
                 
             }
@@ -64,7 +64,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             set 
             { 
                 variableNewDescription = value;
-                OnPropertyChanged("VariableNewDescription");
+                OnPropertyChanged(nameof(VariableNewDescription));
                 IsChanged = true;
             }
         }
@@ -100,7 +100,7 @@ namespace ExpressionEvaluatorUi.ViewModels
                 Type = VariableNewType,
                 Description = VariableNewDescription
             };
-            FormulaEditorViewModel.UpdateVariable(NewVariable);
+            FormulaEditorVM.UpdateVariable(NewVariable);
             CloseWindow();
         }
 
