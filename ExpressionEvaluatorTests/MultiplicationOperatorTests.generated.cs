@@ -593,8 +593,5 @@ namespace ExpressionEvaluatorTests
             ExpressionException ex = Assert.Throws<ExpressionException>(() => _func.Function = func);
             StringAssert.Contains("Operator error", ex.Message);
         }
-        
-        
-
     }
 }

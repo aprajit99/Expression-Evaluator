@@ -17,5 +17,7 @@ namespace ExpressionEvaluator.Procedures.Operators
             DecimalStringString = (x, y) => x + y;
             StringDecimalString = (x, y) => x + y;
         }
+        
+        
     }
 }

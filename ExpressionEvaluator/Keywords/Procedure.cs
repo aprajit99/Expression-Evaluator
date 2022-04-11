@@ -60,6 +60,8 @@ namespace Vanderbilt.Biostatistics.Wfccm2
         public int NumParameters { get; set; }
         public bool VariableOperandsCount { get; private set; }
 
+
+
         public IOperand Evaluate()
         {
             if (Datetime != null) {

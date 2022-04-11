@@ -6,10 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using exp=Vanderbilt.Biostatistics.Wfccm2;
+using ExpressionEvaluator.Procedures.Operators;
 
 namespace ExpressionEvaluatorUi.ViewModels
 {
@@ -19,8 +23,12 @@ namespace ExpressionEvaluatorUi.ViewModels
         public static Variable selectedVariableTemp;
         public HashSet<string> UsedVariables;
 
-        private exp.Expression _func;
+        public exp.Expression _func;
         private bool isSelected;
+
+        public static FormulaEditorViewModel FormulaEditorVM { get; set; }
+        public ListViewHelper ListViewHelper;
+        public bool InputNull { get; set; }
 
         public bool IsSelected
         {
@@ -54,8 +62,6 @@ namespace ExpressionEvaluatorUi.ViewModels
             }
         }
 
-
-
         private string formula;
 
         public string Formula
@@ -66,6 +72,7 @@ namespace ExpressionEvaluatorUi.ViewModels
                 formula = value;
                 OnPropertyChanged(nameof(Formula));
                 CanRunTest = false;
+                TestOutput = null;
             }
         }
         
@@ -101,7 +108,6 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 selectedOutputType = value;
                 OnPropertyChanged(nameof(SelectedOutputType));
-                //CanValidate = true & !string.IsNullOrEmpty(Formula);
                 CanValidate = true;
                 
             }
@@ -141,10 +147,12 @@ namespace ExpressionEvaluatorUi.ViewModels
 
         public FormulaEditorViewModel()
         {
+            FormulaEditorVM = this;
             Variables = new ObservableCollection<Variable>();
             VariableInputViewModels = new ObservableCollection<VariableInputViewModel>();
             OutputTypes = new ObservableCollection<string>();
             UsedVariables = new HashSet<string>();
+            ListViewHelper = new ListViewHelper();
             LoadOperators();
             LoadOutputTypes();
             AddVariableCommand = new AddVariableCommand();
@@ -155,8 +163,7 @@ namespace ExpressionEvaluatorUi.ViewModels
         }
         public static void AddNewVariableToList(Variable Variable)
         {
-            Variables.Add(Variable);
-            
+            Variables.Add(Variable); 
         }
         public void UpdateVariable(Variable NewVariable)
         {
@@ -168,13 +175,13 @@ namespace ExpressionEvaluatorUi.ViewModels
                     
                     NewVariable.Value = variable.VariableInput;
                     VariableInputViewModels.Remove(variable);
-                    UsedVariables.Remove(variable.VariableName); //
+                    UsedVariables.Remove(variable.VariableName); 
                     VariableInputViewModels.Add(new VariableInputViewModel()
                     {
                         VariableName = NewVariable.Name,
                         VariableInput = NewVariable.Value
                     });
-                    UsedVariables.Add(NewVariable.Name); //
+                    UsedVariables.Add(NewVariable.Name); 
                     break;
                 }
             }
@@ -202,7 +209,6 @@ namespace ExpressionEvaluatorUi.ViewModels
         }
         private void LoadOperators()
         {
-
             List<Operator> operatorlist = ListViewHelper.getOperatorList();
             operatorcollectionView = new ListCollectionView(operatorlist);
             operatorcollectionView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
@@ -226,16 +232,6 @@ namespace ExpressionEvaluatorUi.ViewModels
 
             if (SelectedVariable != null)
             {
-                //bool isPresent = false;
-                //foreach (var variable in VariableInputViewModels)
-                //{
-                //    if (variable.VariableName == SelectedVariable.Name)
-                //    {
-                //        isPresent = true;
-                //        break;
-                //    }
-                //}
-                //if (!isPresent)
                 if(!UsedVariables.Contains(SelectedVariable.Name))
                 {
                     VariableInputViewModels.Add(new VariableInputViewModel()
@@ -279,11 +275,23 @@ namespace ExpressionEvaluatorUi.ViewModels
         }
         public void RunTest()
         {
+            if (InputNull)
+            {
+                _func.Function = Formula;
+                InputNull = false;
+            }
+           
             StringBuilder msg = new StringBuilder("");
             foreach (var variable in Variables)
             {
+                
                 if (!UsedVariables.Contains(variable.Name))
                     continue;
+
+                if (variable.Value == null || string.IsNullOrEmpty(variable.Value.ToString()))
+                {
+                    continue;
+                }
 
                 try
                 {
@@ -338,10 +346,16 @@ namespace ExpressionEvaluatorUi.ViewModels
                 }
                 else if (SelectedOutputType == "boolean")
                 {
-                    TestOutput = _func.EvaluateBoolean().ToString();
+                    TestOutput = _func.EvaluateBoolean().ToString(); 
                 }
+                
             }
-            catch(Exception e)
+            catch(exp.ExpressionException e)
+            {
+                MessageBox.Show(e.Message, "Expected Output Type Error",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch(InvalidCastException e)
             {
                 MessageBox.Show(e.Message, "Expected Output Type Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);

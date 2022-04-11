@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Vanderbilt.Biostatistics.Wfccm2
@@ -126,6 +128,7 @@ namespace Vanderbilt.Biostatistics.Wfccm2
         public void AddSetVariable(string name, bool val) { AddSetVariable<bool>(name, val); }
 
         public void AddSetVariable(string name, string val) { AddSetVariable<string>(name, val); }
+       
 
         /// <summary>
         /// Clears all information.
@@ -442,8 +445,7 @@ namespace Vanderbilt.Biostatistics.Wfccm2
                 if (op.Name == "if"
                     || op.Name == "elseif"
                     || op.Name == "else") {
-                    switch (op.Name) {
-                        case "elseif":
+                    switch (op.Name) {                        case "elseif":
                             if (currentConditionalDepth > 0) {
                                 // Eat the result.
                                 continue;

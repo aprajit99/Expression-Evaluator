@@ -165,6 +165,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="120"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="80"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Content="{Binding VariableName}"
                                        Width="100"
@@ -173,6 +174,21 @@
                                          Text="{Binding VariableInput,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                          Margin="1"
                                          BorderThickness="2"/>
+                                <Button Grid.Column="2"
+                                        Margin="2"
+                                        Padding="1"
+                                        HorizontalContentAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        FontFamily="Bold"
+                                        Content="X"
+                                        CommandParameter="{Binding VariableInput}"
+                                        Command="{Binding ClearVariableCommand}">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
