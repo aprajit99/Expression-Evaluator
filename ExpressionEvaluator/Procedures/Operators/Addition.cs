@@ -9,6 +9,8 @@ namespace ExpressionEvaluator.Procedures.Operators
             : base("+", precedance, 2, false)
         {
             _name2 = "Addition";
+            Category = "Arithmetic";
+            Description = "Add two operands.";
             DecimalDecimalDecimal = (x, y) => x+y;
             DatetimeTimespanDatetime = (x, y) => x + y;
             TimespanDatetimeDatetime = (x, y) => y + x;

@@ -8,6 +8,8 @@ namespace ExpressionEvaluator.Procedures.Operators
             : base("!=", precedance, 2, false)
         {
             _name2 = "NotEqual";
+            Category = "Relational";
+            Description = "Check if both operands are not equal.";
             DecimalDecimalBool = (x, y) => x != y;
             BoolBoolBool = (x, y) => x != y;
             StringStringBool = (x, y) => x != y;

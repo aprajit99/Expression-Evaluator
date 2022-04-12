@@ -8,6 +8,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("secondscomponent", precedance, 1, false)
         {
             _name2 = "SecondsComponent";
+            Category = "Date/Time";
+            Description = "Returns the no. of seconds between two given dates";
             TimespanDecimal = x => (decimal)x.Seconds;
         }
     }

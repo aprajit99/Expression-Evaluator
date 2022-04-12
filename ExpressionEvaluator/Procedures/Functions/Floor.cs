@@ -9,6 +9,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("floor", precedance, 2, true)
         {
             _name2 = "Floor";
+            Category = "Mathematical Function";
+            Description = "Return the largest integer, which is less than or equal to the passed argument";
             DecimalDecimalOperandList = x => {
                 if (x.Count > 2)
                     throw new ExpressionException("Floor only takes one or two paramters.");

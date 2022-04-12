@@ -28,5 +28,12 @@ namespace ExpressionEvaluatorTests
             _func.Function = @"Length('abcd')";
             Assert.AreEqual(4, _func.EvaluateNumeric());
         }
+
+        [Test]
+        public void Length_EmptyString()
+        {
+            _func.Function = @"Length('')";
+            Assert.AreEqual(0, _func.EvaluateNumeric());
+        }
     }
 }

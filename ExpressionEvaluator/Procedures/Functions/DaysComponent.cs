@@ -8,6 +8,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("dayscomponent", precedance, 1, false)
         {
             _name2 = "DaysComponent";
+            Category = "Date/Time";
+            Description = "Returns the no. of days between two given dates";
             TimespanDecimal = x => (decimal)x.Days;
         }
     }

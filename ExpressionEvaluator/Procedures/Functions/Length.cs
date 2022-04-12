@@ -8,6 +8,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("length", precedance, 1, false)
         {
             _name2 = "Length";
+            Category = "String";
+            Description = "Returns the length of given string";
             StringDecimal = x => x.Length;
         }
     }

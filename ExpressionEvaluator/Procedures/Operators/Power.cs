@@ -10,6 +10,8 @@ namespace ExpressionEvaluator.Procedures.Operators
             : base("^", precedance, 2, false)
         {
             _name2 = "Power";
+            Category = "Arithmetic";
+            Description = "Raise the number on the left to the power of the exponent of the right.";
             DecimalDecimalDecimal = (x, y) => {
                 double dblResult = Math.Pow((double)x, (double)y);
                 if (double.IsNaN(dblResult)) {

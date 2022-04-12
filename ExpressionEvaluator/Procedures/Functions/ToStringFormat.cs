@@ -8,6 +8,7 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("tostringformat", precedance, 2, false)
         {
             _name2 = "ToStringFormat";
+            Category = "String";
             DecimalStringString = (x, y) => x.ToString(y);
         }
     }

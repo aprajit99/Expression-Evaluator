@@ -9,6 +9,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("max", precedance, 1, true)
         {
             _name2 = "Max";
+            Category = "Mathematical Function";
+            Description = "Returns the larger of the specified numbers.";
             DecimalDecimalOperandList = x => x.Max();
         }
     }

@@ -9,6 +9,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("round", precedance, 2, false)
         {
             _name2 = "Round";
+            Category = "Mathematical Function";
+            Description = "Rounds the number to a specified number of digits";
             DecimalDecimalDecimal = (x, y) => Math.Round(x, (int)y, MidpointRounding.AwayFromZero);
         }
     }

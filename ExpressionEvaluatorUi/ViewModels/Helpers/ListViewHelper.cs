@@ -13,123 +13,33 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
     {
         public static List<Operator> getOperatorList()
         {
-            
-            //Type[] types= Assembly.GetExecutingAssembly().GetTypes().Where(t => String.Equals(t.Namespace, "ExpressionEvaluator.Procedures.Operators", StringComparison.Ordinal)).ToArray();
-            //foreach (var type in types)
-            //{
-            //    Console.WriteLine(type.Name);
-            //}
             List<Operator> operators = new List<Operator>();
-            operators.Add(new Operator()
+            var _operators = from t in exp.ExpressionKeywords.Keywords.OfType<exp.Operator>()
+                             select t;
+            foreach(var opr in _operators)
             {
-                Category = "Arithmetic",
-                Type = "+",
-                Description = "Add two operands."
-
-            });
-            operators.Add(new Operator()
+                var new_operator = new Operator()
+                {
+                    Category = opr.Category,
+                    Type=opr.Name,
+                    Description=opr.Description
+                };
+                operators.Add(new_operator);
+            }
+            var _functions = from t in exp.ExpressionKeywords.Keywords.OfType<exp.Function>()
+                             select t;
+            foreach (var func in _functions)
             {
-                Category = "Arithmetic",
-                Type = "-",
-                Description = "Subtract two operands."
-
-            });
-            operators.Add(new Operator()
-            {
-                Category = "Arithmetic",
-                Type = "*",
-                Description = "Multiply two operands."
-
-            });
-            operators.Add(new Operator()
-            {
-                Category = "Arithmetic",
-                Type = "/",
-                Description = "Divide two operands and gives the quotient as the answer."
-
-            });
-            operators.Add(new Operator()
-            {
-                Category = "Arithmetic",
-                Type = "%",
-                Description = " Find the remains of two integers and gives the remainder after the division."
-
-            });
-
-
-            operators.Add(new Operator()
-            {
-                Category = "Relational",
-                Type = "==",
-                Description = "Check if both operands are equal."
-
-            });
-
-            operators.Add(new Operator()
-            {
-                Category = "Relational",
-                Type = "!=",
-                Description = "Check if both operands are not equal."
-
-            });
-            operators.Add(new Operator()
-            {
-                Category = "Relational",
-                Type = ">",
-                Description = "Check if the first operand is greater than the second."
-
-            });
-            operators.Add(new Operator()
-            {
-                Category = "Relational",
-                Type = "<",
-                Description = "Check if the first operand is lesser than the second."
-
-            });
-            operators.Add(new Operator()
-            {
-                Category = "Relational",
-                Type = ">=",
-                Description = "Check if the first operand is greater than or equal to the second."
-
-            });
-            operators.Add(new Operator()
-            {
-                Category = "Relational",
-                Type = "<=",
-                Description = "Check if the first operand is lesser than or equal to the second."
-
-            });
-
-            operators.Add(new Operator()
-            {
-                Category = "Logical",
-                Type = "&&",
-                Description = "Check if both the operands are true."
-
-            });
-            operators.Add(new Operator()
-            {
-                Category = "Logical",
-                Type = "||",
-                Description = "Check if at least one of the operand is true."
-
-            });
-            operators.Add(new Operator()
-            {
-                Category = "Logical",
-                Type = "!",
-                Description = "Check if the operand is false"
-
-            });
-
+                var new_operator = new Operator()
+                {
+                    Category = func.Category,
+                    Type = func.Name,
+                    Description = func.Description
+                };
+                operators.Add(new_operator);
+            }
             return operators;
         }
-        //public Type[] GetOperators()
-        //{
-            
-        //    return Assembly.GetExecutingAssembly().GetTypes().Where(t => String.Equals(t.Namespace, "ExpressionEvaluator.Procedures.Operators", StringComparison.Ordinal)).ToArray();
-        //}
         public static List<string> getVariableTypeList()
         {
             List<string> VariableTypes = new List<string>() {"int","float","double","char","string","bool","object" };

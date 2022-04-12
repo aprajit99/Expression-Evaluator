@@ -495,5 +495,11 @@ namespace ExpressionEvaluatorTests
             _func.AddSetVariable("a", _now);
             Assert.AreEqual(new TimeSpan(1, 0, 0, 0), _func.Evaluate<TimeSpan>());
         }
+        [Test]
+        public void Now_test() {
+            _func.Function = "a";
+            _func.AddSetVariable("a", _now);
+            Assert.AreEqual(_now, _func.Evaluate<DateTime>());
+        }
     }
 }

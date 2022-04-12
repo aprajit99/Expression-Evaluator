@@ -8,6 +8,7 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("totaldays", precedance, 1, false)
         {
             _name2 = "TotalDays";
+            Category = "Date/Time";
             TimespanDecimal = x => (decimal)x.TotalDays;
         }
     }

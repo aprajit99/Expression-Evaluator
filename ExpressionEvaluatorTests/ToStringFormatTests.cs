@@ -34,5 +34,6 @@ namespace ExpressionEvaluatorTests
             func.Function = @"ToStringFormat(10.1, '0.00')";
             Assert.AreEqual("10.10", func.Evaluate<string>());
         }
+        
     }
 }

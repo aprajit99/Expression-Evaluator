@@ -8,6 +8,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("tostring", precedance, 1, false)
         {
             _name2 = "ToString";
+            Category = "String";
+            Description = "Returns the string equivalent of the given number";
             DecimalString = x => x.ToString();
             DateTimeString = x => x.ToString();
             BoolString = x => x.ToString();

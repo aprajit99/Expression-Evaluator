@@ -9,6 +9,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("tonumber", precedance, 1, false)
         {
             _name2 = "ToNumber";
+            Category = "String";
+            Description = "Returns the number equivalent of the given string";
             StringDecimal = x => {
                 try {
                     return decimal.Parse(x);

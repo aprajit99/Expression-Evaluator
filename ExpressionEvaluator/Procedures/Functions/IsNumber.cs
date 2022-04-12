@@ -9,6 +9,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("isnumber", precedance, 1, false)
         {
             _name2 = "IsNumber";
+            Category = "Mathematical Function";
+            Description = "Check if the given argument is a number or not";
             AnyBool = x => x != null && StringBool(x.ToString());
             StringBool = x => {
                 try {

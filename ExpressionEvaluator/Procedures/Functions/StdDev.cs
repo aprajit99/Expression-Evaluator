@@ -10,6 +10,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("stddev", precedance, 1, true)
         {
             _name2 = "StdDev";
+            Category = "Mathematical Function";
+            Description = "Returns the standard deviation of the given numbers";
             DecimalDecimalOperandList = x => {
                 var avg = (double)x.Average();
                 return (decimal)Math.Sqrt(x.Average(v => Math.Pow((double)v - avg, 2)));

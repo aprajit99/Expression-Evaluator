@@ -9,6 +9,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("avg", precedance, 1, true)
         {
             _name2 = "Avg";
+            Category = "Mathematical Function";
+            Description = "Calculates the average of the values.";
             DecimalDecimalOperandList = x => x.Average();
         }
     }

@@ -9,6 +9,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("ceiling", precedance, 2, true)
         {
             _name2 = "Ceiling";
+            Category = "Mathematical Function";
+            Description = "Return the smallest integral value greater than or equal to the specified number";
             DecimalDecimalOperandList = x => {
                 if (x.Count > 2)
                     throw new ExpressionException("Ceiling only takes one or two paramters.");

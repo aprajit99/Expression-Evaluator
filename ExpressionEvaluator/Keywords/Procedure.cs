@@ -59,7 +59,8 @@ namespace Vanderbilt.Biostatistics.Wfccm2
         public bool AlwaysReturnsValue { get; private set; }
         public int NumParameters { get; set; }
         public bool VariableOperandsCount { get; private set; }
-
+        public string Category { get; set; }
+        public string Description { get; set; }
 
 
         public IOperand Evaluate()

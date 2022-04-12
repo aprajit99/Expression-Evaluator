@@ -10,6 +10,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("ln", precedance, 1, false)
         {
             _name2 = "NaturalLog";
+            Category = "Mathematical Function";
+            Description = "Returns the natural (base e) logarithm of a specified number.";
             DecimalDecimal = x => {
                 double dblResult = Math.Log((double)x);
                 if (double.IsNaN(dblResult)) {

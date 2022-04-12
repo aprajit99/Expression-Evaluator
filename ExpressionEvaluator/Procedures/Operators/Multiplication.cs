@@ -8,6 +8,8 @@ namespace ExpressionEvaluator.Procedures.Operators
             : base("*", precedance, 2, false)
         {
             _name2 = "Multiplication";
+            Category = "Arithmetic";
+            Description = "Multiply two operands.";
             DecimalDecimalDecimal = (x, y) =>x*y;
         }
     }

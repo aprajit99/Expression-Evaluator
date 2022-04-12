@@ -9,6 +9,8 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("concatenate", precedance, 1, true)
         {
             _name2 = "Concatenate";
+            Category = "String";
+            Description = "Appending one string to the end of another string";
             ObjectStringOperandList = x => x.Aggregate("", (current, i) => current + i);
         }
     }

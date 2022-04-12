@@ -9,6 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("minutes", precedance, 1, false)
         {
             _name2 = "Minutes";
+            Category = "Date/Time";
             DecimalTimespan = x => new TimeSpan((long)(x * TimeSpan.TicksPerMinute));
         }
     }

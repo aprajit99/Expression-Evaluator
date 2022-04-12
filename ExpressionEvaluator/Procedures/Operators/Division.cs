@@ -10,7 +10,8 @@ namespace ExpressionEvaluator.Procedures.Operators
             : base("/", precedance, 2, false)
         {
             _name2 = "Division";
-           
+            Category = "Arithmetic";
+            Description = "Divide two operands and gives the quotient as the answer.";
             DecimalDecimalDecimal = (x, y) => {
                 if (y == 0) {
                     throw new DivideByZeroException();

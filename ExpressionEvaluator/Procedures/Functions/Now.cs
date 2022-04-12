@@ -9,6 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
             : base("now", precedance, 0, false)
         {
             _name2 = "Now";
+            Category = "Date/Time";
             Datetime = () => DateTime.Now;
         }
     }
