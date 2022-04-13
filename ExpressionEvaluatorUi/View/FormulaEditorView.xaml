@@ -126,8 +126,8 @@
                           SelectedValue="{Binding SelectedOperator}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Type" Width="50"  DisplayMemberBinding="{Binding Type}"/>
-                            <GridViewColumn Header="Description"  DisplayMemberBinding="{Binding Description}" />
+                            <GridViewColumn Header="Type" Width="200"  DisplayMemberBinding="{Binding Type}"/>
+                            <GridViewColumn Header="Description" Width="450" DisplayMemberBinding="{Binding Description}" />
                         </GridView>
                     </ListView.View>
                     <ListView.GroupStyle>
@@ -136,7 +136,6 @@
                     </ListView.GroupStyle>
                 </ListView>
             </GroupBox>
-
         </Grid>
         <GroupBox Grid.Row="2"
                   Header="Step 2: Test the Formula"

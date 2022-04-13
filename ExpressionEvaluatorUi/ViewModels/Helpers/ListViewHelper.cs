@@ -42,12 +42,12 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
         }
         public static List<string> getVariableTypeList()
         {
-            List<string> VariableTypes = new List<string>() {"int","float","double","char","string","bool","object" };
+            List<string> VariableTypes = new List<string>() {"int","float","double","char","string","bool","object","DateTime","TimeSpan" };
             return VariableTypes;
         }
         public static List<string> getOutputTypeList()
         {
-            List<string> OutputTypes = new List<string>() {"numeric","string","boolean" };
+            List<string> OutputTypes = new List<string>() {"numeric","string","boolean","DateTime","TimeSpan" };
             return OutputTypes;
         }
     }

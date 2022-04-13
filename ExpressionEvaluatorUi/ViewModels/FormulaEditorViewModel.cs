@@ -166,8 +166,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             Variables.Add(Variable); 
         }
         public void UpdateVariable(Variable NewVariable)
-        {
-            
+        { 
             foreach (var variable in VariableInputViewModels)
             {
                 if (variable.VariableName == selectedVariableTemp.Name)
@@ -195,11 +194,8 @@ namespace ExpressionEvaluatorUi.ViewModels
                     Variables.Add(NewVariable);
                     break;
                 }
-            }
-             
-            
+            }   
         }
-
         private void AddVariableToFormula()
         {
             Formula += SelectedVariable.Name.ToString();
@@ -288,9 +284,18 @@ namespace ExpressionEvaluatorUi.ViewModels
                 if (!UsedVariables.Contains(variable.Name))
                     continue;
 
-                if (variable.Value == null || string.IsNullOrEmpty(variable.Value.ToString()))
+                //if (variable.Value == null || string.IsNullOrEmpty(variable.Value.ToString()))
+                //{
+                //    continue;
+                //}
+                if (variable.Value == null)
                 {
                     continue;
+                }
+                else if (variable.Value.ToString().Length == 0)
+                {
+                    if (variable.Type != "string")
+                        continue;
                 }
 
                 try
@@ -316,6 +321,14 @@ namespace ExpressionEvaluatorUi.ViewModels
                         case "bool":
                             variable.Value = Convert.ChangeType(variable.Value, typeof(bool));
                             _func.AddSetVariable(variable.Name, (bool)variable.Value);
+                            break;
+                        case "DateTime":
+                            variable.Value = Convert.ToDateTime(variable.Value);
+                            _func.AddSetVariable(variable.Name, (DateTime)variable.Value);
+                            break;
+                        case "TimeSpan":
+                            variable.Value = TimeSpan.Parse((string)variable.Value);
+                            _func.AddSetVariable(variable.Name, (TimeSpan)variable.Value);
                             break;
                     }
                 }
@@ -348,16 +361,25 @@ namespace ExpressionEvaluatorUi.ViewModels
                 {
                     TestOutput = _func.EvaluateBoolean().ToString(); 
                 }
-                
+                else if (SelectedOutputType == "DateTime")
+                {
+                    TestOutput = _func.Evaluate<DateTime>().ToString();
+                }
+                else if (SelectedOutputType == "TimeSpan")
+                {
+                    TestOutput = _func.Evaluate<TimeSpan>().ToString();
+                }
+
+
             }
             catch(exp.ExpressionException e)
             {
-                MessageBox.Show(e.Message, "Expected Output Type Error",
+                MessageBox.Show(e.Message, "Output Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch(InvalidCastException e)
             {
-                MessageBox.Show(e.Message, "Expected Output Type Error",
+                MessageBox.Show(e.Message, "Output Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

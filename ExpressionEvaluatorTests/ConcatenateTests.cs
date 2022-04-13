@@ -63,5 +63,6 @@ namespace ExpressionEvaluatorTests
             func.AddSetVariable("a", "word");
             Assert.AreEqual("a1word", func.Evaluate<string>());
         }
+        
     }
 }

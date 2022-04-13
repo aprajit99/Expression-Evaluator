@@ -38,7 +38,10 @@ namespace ExpressionEvaluatorUi.ViewModels
                         break;
                     }
                 }
-                if(VariableInput==null || string.IsNullOrEmpty(VariableInput.ToString()))
+                //handle case of string empty or Null
+
+                //if(VariableInput==null || string.IsNullOrEmpty(VariableInput.ToString()))
+                if (VariableInput == null || (VariableInput.ToString()).Length==0)
                 {
                     FormulaEditorViewModel.FormulaEditorVM.InputNull = true;
                 }

@@ -10,6 +10,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "Now";
             Category = "Date/Time";
+            Description = "Gets the current Date and Time.";
             Datetime = () => DateTime.Now;
         }
     }
