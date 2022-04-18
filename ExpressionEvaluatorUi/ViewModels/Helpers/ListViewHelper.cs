@@ -11,7 +11,7 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
 {
     public class ListViewHelper
     {
-        public static List<Operator> getOperatorList()
+        public List<Operator> GetOperatorList()
         {
             List<Operator> operators = new List<Operator>();
             var _operators = from t in exp.ExpressionKeywords.Keywords.OfType<exp.Operator>()
@@ -40,12 +40,7 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
             }
             return operators;
         }
-        public static List<string> getVariableTypeList()
-        {
-            List<string> VariableTypes = new List<string>() {"int","float","double","char","string","bool","object","DateTime","TimeSpan" };
-            return VariableTypes;
-        }
-        public static List<string> getOutputTypeList()
+        public List<string> GetOutputTypeList()
         {
             List<string> OutputTypes = new List<string>() {"numeric","string","boolean","DateTime","TimeSpan" };
             return OutputTypes;

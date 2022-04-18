@@ -65,5 +65,6 @@ namespace ExpressionEvaluatorTests
             _func.Function = @"Contains('abcd','bc')";
             Assert.AreEqual(true, _func.EvaluateBoolean());
         }
+        
     }
 }

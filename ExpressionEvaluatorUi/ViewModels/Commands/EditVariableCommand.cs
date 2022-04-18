@@ -19,10 +19,7 @@ namespace ExpressionEvaluatorUi.ViewModels.Commands
         public FormulaEditorViewModel formulaEditorVM { get; set; }
         public bool CanExecute(object parameter)
         {
-            bool test = (bool)parameter;
-            return test;
-            
-            //return true;
+            return (bool)parameter;
         }
         public EditVariableCommand(FormulaEditorViewModel formulaEditorViewModel)
         {  

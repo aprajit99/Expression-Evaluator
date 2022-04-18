@@ -20,15 +20,15 @@ namespace ExpressionEvaluatorUi.ViewModels
     public class FormulaEditorViewModel:INotifyPropertyChanged
     {
         
-        public static Variable selectedVariableTemp;
+        //public static Variable selectedVariableTemp;
         public HashSet<string> UsedVariables;
 
         public exp.Expression _func;
         private bool isSelected;
 
-        public static FormulaEditorViewModel FormulaEditorVM { get; set; }
+        //public static FormulaEditorViewModel FormulaEditorVM { get; set; }
         public ListViewHelper ListViewHelper;
-        public bool InputNull { get; set; }
+        //public bool InputNull { get; set; }
 
         public bool IsSelected
         {
@@ -128,7 +128,7 @@ namespace ExpressionEvaluatorUi.ViewModels
 
 
 
-        public static ObservableCollection<Variable> Variables { get; set; }
+        //public static ObservableCollection<Variable> Variables { get; set; }
         public ObservableCollection<string> OutputTypes { get; set; }
 
         public ListCollectionView operatorcollectionView { get; set; }
@@ -138,17 +138,13 @@ namespace ExpressionEvaluatorUi.ViewModels
         public ValidateFormulaCommand ValidateFormulaCommand { get; set; }
         public RunTestCommand RunTestCommand { get; set; }
         public PrintCommand PrintCommand { get; set; }
-
-
-
-        public static ObservableCollection<VariableInputViewModel> VariableInputViewModels { get; set; }
-
+        public ObservableCollection<VariableInputViewModel> VariableInputViewModels { get; set; }
 
 
         public FormulaEditorViewModel()
         {
-            FormulaEditorVM = this;
-            Variables = new ObservableCollection<Variable>();
+            //FormulaEditorVM = this;
+            //Variables = new ObservableCollection<Variable>();
             VariableInputViewModels = new ObservableCollection<VariableInputViewModel>();
             OutputTypes = new ObservableCollection<string>();
             UsedVariables = new HashSet<string>();
@@ -161,15 +157,15 @@ namespace ExpressionEvaluatorUi.ViewModels
             RunTestCommand = new RunTestCommand(this);
             PrintCommand = new PrintCommand(this);
         }
-        public static void AddNewVariableToList(Variable Variable)
-        {
-            Variables.Add(Variable); 
-        }
+        //public static void AddNewVariableToList(Variable Variable)
+        //{
+        //    FormulaEditorHelper.Instance.Variables.Add(Variable); 
+        //}
         public void UpdateVariable(Variable NewVariable)
         { 
             foreach (var variable in VariableInputViewModels)
             {
-                if (variable.VariableName == selectedVariableTemp.Name)
+                if (variable.VariableName == FormulaEditorHelper.Instance.SelectedVariableTemp.Name)
                 {
                     
                     NewVariable.Value = variable.VariableInput;
@@ -185,33 +181,34 @@ namespace ExpressionEvaluatorUi.ViewModels
                 }
             }
             
-            foreach (var Variable in Variables)
+            foreach (var Variable in FormulaEditorHelper.Instance.Variables)
             {
-                if (Variable.Name == selectedVariableTemp.Name)
+                if (Variable.Name == FormulaEditorHelper.Instance.SelectedVariableTemp.Name)
                 {
-                     
-                    Variables.Remove(Variable);
-                    Variables.Add(NewVariable);
+
+                    FormulaEditorHelper.Instance.Variables.Remove(Variable);
+                    FormulaEditorHelper.Instance.Variables.Add(NewVariable);
                     break;
                 }
-            }   
+            }
+            IsSelected = false;
         }
         private void AddVariableToFormula()
         {
             Formula += SelectedVariable.Name.ToString();
-            selectedVariableTemp = SelectedVariable;
+            FormulaEditorHelper.Instance.SelectedVariableTemp = SelectedVariable;
             SelectedVariable = null;
             
         }
         private void LoadOperators()
         {
-            List<Operator> operatorlist = ListViewHelper.getOperatorList();
+            List<Operator> operatorlist = ListViewHelper.GetOperatorList();
             operatorcollectionView = new ListCollectionView(operatorlist);
             operatorcollectionView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
         }
         private void LoadOutputTypes()
         {
-            List<string> outputlist = ListViewHelper.getOutputTypeList();
+            List<string> outputlist = ListViewHelper.GetOutputTypeList();
             foreach(string type in outputlist)
             {
                 OutputTypes.Add(type);
@@ -271,14 +268,14 @@ namespace ExpressionEvaluatorUi.ViewModels
         }
         public void RunTest()
         {
-            if (InputNull)
+            if (FormulaEditorHelper.Instance.InputNull)
             {
                 _func.Function = Formula;
-                InputNull = false;
+                FormulaEditorHelper.Instance.InputNull = false;
             }
            
             StringBuilder msg = new StringBuilder("");
-            foreach (var variable in Variables)
+            foreach (var variable in FormulaEditorHelper.Instance.Variables)
             {
                 
                 if (!UsedVariables.Contains(variable.Name))

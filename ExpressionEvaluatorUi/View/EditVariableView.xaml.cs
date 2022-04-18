@@ -1,4 +1,5 @@
 ﻿using ExpressionEvaluatorUi.ViewModels;
+using ExpressionEvaluatorUi.ViewModels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,7 +23,8 @@ namespace ExpressionEvaluatorUi.View
         {
             InitializeComponent();
             this.DataContext = new EditVariableViewModel();
-            EditVariableViewModel.CloseWindow = Close;
+            //EditVariableViewModel.CloseWindow = Close;
+            FormulaEditorHelper.Instance.EditVariable_CloseWindow = Close;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ExpressionEvaluatorUi.Model;
 using ExpressionEvaluatorUi.ViewModels.Commands;
+using ExpressionEvaluatorUi.ViewModels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,9 +16,9 @@ namespace ExpressionEvaluatorUi.ViewModels
         public bool VariableTypeChanged;
         private bool nameTypeChanged;
 
-        //
-        public static Action CloseWindow { get; set; }
-        //
+        
+        //public static Action CloseWindow { get; set; }
+        
 
         public bool NameTypeChanged
         {
@@ -90,7 +91,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             //TODO: use dictionary
             //check if already present or not
             bool isPresent = false;
-            foreach(var variable in FormulaEditorViewModel.Variables)
+            foreach(var variable in FormulaEditorHelper.Instance.Variables)
             {
                 if (variable.Name == variableName)
                 {
@@ -106,7 +107,8 @@ namespace ExpressionEvaluatorUi.ViewModels
                     Type = variableType,
                     Description = variableDescription
                 };
-                FormulaEditorViewModel.AddNewVariableToList(Variable);
+                //FormulaEditorViewModel.AddNewVariableToList(Variable);
+                FormulaEditorHelper.Instance.Variables.Add(Variable);
             }
             else
             {
@@ -125,7 +127,7 @@ namespace ExpressionEvaluatorUi.ViewModels
 
         private void LoadVariableTypes()
         {
-            List<string> types = Helpers.ListViewHelper.getVariableTypeList();
+            List<string> types = FormulaEditorHelper.Instance.GetVariableTypeList();
             foreach(var type in types)
             {
                 VariableTypes.Add(type);

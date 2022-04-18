@@ -1,5 +1,6 @@
 ﻿using ExpressionEvaluatorUi.Model;
 using ExpressionEvaluatorUi.ViewModels.Commands;
+using ExpressionEvaluatorUi.ViewModels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,9 +13,9 @@ namespace ExpressionEvaluatorUi.ViewModels
     public class EditVariableViewModel : INotifyPropertyChanged
     {
         
-        public static ObservableCollection<string> VariableTypes { get; set; }
+        public ObservableCollection<string> VariableTypes { get; set; }
         public FormulaEditorViewModel FormulaEditorVM;
-        public static Action CloseWindow { get; set; }
+        //public static Action CloseWindow { get; set; }
 
         public UpdateVariableCommand UpdateVariableCommand { get; set; }
         public CloseWindowCommand CloseWindowCommand { get; set; }
@@ -78,7 +79,7 @@ namespace ExpressionEvaluatorUi.ViewModels
         }
         private void LoadVariableTypes()
         {
-            List<string> types = Helpers.ListViewHelper.getVariableTypeList();
+            List<string> types = FormulaEditorHelper.Instance.GetVariableTypeList();
             foreach (var type in types)
             {
                 VariableTypes.Add(type);
@@ -87,9 +88,9 @@ namespace ExpressionEvaluatorUi.ViewModels
         }
         public void LoadVariableDetails()
         {
-            VariableNewName = FormulaEditorViewModel.selectedVariableTemp.Name;
-            VariableNewType = FormulaEditorViewModel.selectedVariableTemp.Type;
-            VariableNewDescription = FormulaEditorViewModel.selectedVariableTemp.Description;
+            VariableNewName = FormulaEditorHelper.Instance.SelectedVariableTemp.Name;
+            VariableNewType = FormulaEditorHelper.Instance.SelectedVariableTemp.Type;
+            VariableNewDescription = FormulaEditorHelper.Instance.SelectedVariableTemp.Description;
             IsChanged = false;
         }
         public void CreateUpdatedVariable()
@@ -101,7 +102,9 @@ namespace ExpressionEvaluatorUi.ViewModels
                 Description = VariableNewDescription
             };
             FormulaEditorVM.UpdateVariable(NewVariable);
-            CloseWindow();
+            // CloseWindow();
+            FormulaEditorHelper.Instance.InputNull = true;
+            FormulaEditorHelper.Instance.EditVariable_CloseWindow?.Invoke();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

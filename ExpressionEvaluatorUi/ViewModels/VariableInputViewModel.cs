@@ -1,4 +1,5 @@
 ﻿using ExpressionEvaluatorUi.ViewModels.Commands;
+using ExpressionEvaluatorUi.ViewModels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,7 +31,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 variableInput = value;
                 OnPropertyChanged(nameof(VariableInput));
-                foreach(var variable in FormulaEditorViewModel.Variables)
+                foreach(var variable in FormulaEditorHelper.Instance.Variables)
                 {
                     if (variable.Name == VariableName)
                     {
@@ -43,7 +44,8 @@ namespace ExpressionEvaluatorUi.ViewModels
                 //if(VariableInput==null || string.IsNullOrEmpty(VariableInput.ToString()))
                 if (VariableInput == null || (VariableInput.ToString()).Length==0)
                 {
-                    FormulaEditorViewModel.FormulaEditorVM.InputNull = true;
+                    //FormulaEditorViewModel.FormulaEditorVM.InputNull = true;
+                    FormulaEditorHelper.Instance.InputNull = true;
                 }
 
             }
