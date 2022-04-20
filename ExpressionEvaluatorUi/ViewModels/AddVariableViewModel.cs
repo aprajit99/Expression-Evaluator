@@ -105,7 +105,8 @@ namespace ExpressionEvaluatorUi.ViewModels
                 {
                     Name = variableName,
                     Type = variableType,
-                    Description = variableDescription
+                    Description = variableDescription,
+                    Value=null
                 };
                 //FormulaEditorViewModel.AddNewVariableToList(Variable);
                 FormulaEditorHelper.Instance.Variables.Add(Variable);

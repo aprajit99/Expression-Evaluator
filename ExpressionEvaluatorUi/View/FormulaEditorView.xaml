@@ -13,6 +13,7 @@
     <UserControl.Resources>
         <vm:FormulaEditorViewModel x:Key="FormulaEditorViewModel"/>
         <x:Static Member="h:FormulaEditorHelper.Instance" x:Key="FormulaEditorHelper"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid DataContext="{StaticResource FormulaEditorViewModel}"
           x:Name="MainGrid">
@@ -178,11 +179,19 @@
                                        Width="100"
                                        HorizontalContentAlignment="Center"
                                        VerticalContentAlignment="Center"/>
-                                <TextBox Grid.Column="1" 
+                                <TextBlock Grid.Column="1" Text="Null"
+                                           Margin="7"
+                                           VerticalAlignment="Center"
+                                           Foreground="LightSteelBlue"
+                                           FontStyle="Italic"
+                                           Visibility="{Binding NullInput,Converter={StaticResource BooleanToVisibilityConverter}}">
+                                </TextBlock>
+                                <TextBox Grid.Column="1"
                                          Text="{Binding VariableInput,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                          VerticalContentAlignment="Center"
                                          Height="25"
                                          Margin="1"
+                                         Background="Transparent"
                                          BorderThickness="1"/>
                                 <Button Grid.Column="2"
                                         Margin="5"
@@ -194,7 +203,7 @@
                                         FontFamily="Bold"
                                         BorderBrush="White"
                                         BorderThickness="0"
-                                        Background="White"
+                                        Background="Transparent"
                                         CommandParameter="{Binding VariableInput}"
                                         Command="{Binding ClearVariableCommand}">
                                     <Button.Resources>

@@ -39,7 +39,10 @@ namespace ExpressionEvaluatorUi.ViewModels
                         break;
                     }
                 }
-                //handle case of string empty or Null
+                if (VariableInput == null)
+                    NullInput = true;
+                else
+                    NullInput = false;
 
                 //if(VariableInput==null || string.IsNullOrEmpty(VariableInput.ToString()))
                 if (VariableInput == null || (VariableInput.ToString()).Length==0)
@@ -50,8 +53,21 @@ namespace ExpressionEvaluatorUi.ViewModels
 
             }
         }
+        private bool nullInput;
+
+        public bool NullInput
+        {
+            get { return nullInput; }
+            set 
+            { 
+                nullInput = value;
+                OnPropertyChanged(nameof(NullInput));
+            }
+        }
+
         public VariableInputViewModel()
         {
+            NullInput = true;
             ClearVariableCommand = new ClearVariableCommand(this);
         }
         public event PropertyChangedEventHandler PropertyChanged;
