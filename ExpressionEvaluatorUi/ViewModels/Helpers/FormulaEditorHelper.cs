@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using NSwag.Collections;
 
 namespace ExpressionEvaluatorUi.ViewModels.Helpers
 {
     public class FormulaEditorHelper : IFormulaEditorHelper
     {
-        public ObservableCollection<Variable> Variables { get; set; }
+        public ObservableDictionary<string,Variable> Variables { get; set; }
         public Variable SelectedVariableTemp { get; set; }
         public bool InputNull { get; set; }
         public Action AddVariable_CloseWindow { get; set; }
@@ -20,7 +21,7 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
         }
         public FormulaEditorHelper() 
         {
-            Variables = new ObservableCollection<Variable>();
+            Variables = new ObservableDictionary<string, Variable>();
         }
         private static FormulaEditorHelper instance = null;
         public static FormulaEditorHelper Instance

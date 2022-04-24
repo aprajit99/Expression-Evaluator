@@ -31,13 +31,17 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 variableInput = value;
                 OnPropertyChanged(nameof(VariableInput));
-                foreach(var variable in FormulaEditorHelper.Instance.Variables)
+                //foreach(var variable in FormulaEditorHelper.Instance.Variables)
+                //{
+                //    if (variable.Name == VariableName)
+                //    {
+                //        variable.Value = VariableInput;
+                //        break;
+                //    }
+                //}
+                if (FormulaEditorHelper.Instance.Variables.ContainsKey(VariableName))
                 {
-                    if (variable.Name == VariableName)
-                    {
-                        variable.Value = VariableInput;
-                        break;
-                    }
+                    FormulaEditorHelper.Instance.Variables[VariableName].Value = variableInput;
                 }
                 if (VariableInput == null)
                     NullInput = true;

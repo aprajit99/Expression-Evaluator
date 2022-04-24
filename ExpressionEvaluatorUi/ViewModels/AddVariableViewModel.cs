@@ -90,16 +90,17 @@ namespace ExpressionEvaluatorUi.ViewModels
         {
             //TODO: use dictionary
             //check if already present or not
-            bool isPresent = false;
-            foreach(var variable in FormulaEditorHelper.Instance.Variables)
-            {
-                if (variable.Name == variableName)
-                {
-                    isPresent = true;
-                    break;
-                }
-            }
-            if (!isPresent)
+            //bool isPresent = false;
+            //foreach(var variable in FormulaEditorHelper.Instance.Variables)
+            //{
+            //    if (variable.Name == variableName)
+            //    {
+            //        isPresent = true;
+            //        break;
+            //    }
+            //}
+            //if (!isPresent)
+            if(!FormulaEditorHelper.Instance.Variables.ContainsKey(variableName))
             {
                 Variable Variable = new Variable
                 {
@@ -109,7 +110,7 @@ namespace ExpressionEvaluatorUi.ViewModels
                     Value=null
                 };
                 //FormulaEditorViewModel.AddNewVariableToList(Variable);
-                FormulaEditorHelper.Instance.Variables.Add(Variable);
+                FormulaEditorHelper.Instance.Variables.Add(variableName,Variable);
             }
             else
             {

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpressionEvaluator", "Expr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpressionEvaluatorTests", "ExpressionEvaluatorTests\ExpressionEvaluatorTests.csproj", "{F10EECC5-380C-4A7C-8345-EE49F44C7C3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionEvaluatorUi", "ExpressionEvaluatorUi\ExpressionEvaluatorUi.csproj", "{77C9678B-6B41-445A-B032-CB8E59046A7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpressionEvaluatorUi", "ExpressionEvaluatorUi\ExpressionEvaluatorUi.csproj", "{77C9678B-6B41-445A-B032-CB8E59046A7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
