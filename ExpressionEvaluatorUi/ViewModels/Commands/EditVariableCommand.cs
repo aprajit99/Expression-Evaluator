@@ -15,7 +15,6 @@ namespace ExpressionEvaluatorUi.ViewModels.Commands
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
-        
         public FormulaEditorViewModel formulaEditorVM { get; set; }
         public bool CanExecute(object parameter)
         {

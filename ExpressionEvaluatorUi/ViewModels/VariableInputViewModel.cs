@@ -10,9 +10,16 @@ namespace ExpressionEvaluatorUi.ViewModels
 {
     public class VariableInputViewModel : INotifyPropertyChanged
     {
-        public ClearVariableCommand ClearVariableCommand { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
         private string variableName;
-
+        private object variableInput;
+        private bool nullInput;
+        public VariableInputViewModel()
+        {
+            NullInput = true;
+            ClearVariableCommand = new ClearVariableCommand(this);
+        }
+        public ClearVariableCommand ClearVariableCommand { get; set; }
         public string VariableName
         {
             get { return variableName; }
@@ -22,8 +29,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged(nameof(VariableName));
             }
         }
-        private object variableInput;
-
         public object VariableInput
         {
             get { return variableInput; }
@@ -31,14 +36,6 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 variableInput = value;
                 OnPropertyChanged(nameof(VariableInput));
-                //foreach(var variable in FormulaEditorHelper.Instance.Variables)
-                //{
-                //    if (variable.Name == VariableName)
-                //    {
-                //        variable.Value = VariableInput;
-                //        break;
-                //    }
-                //}
                 if (FormulaEditorHelper.Instance.Variables.ContainsKey(VariableName))
                 {
                     FormulaEditorHelper.Instance.Variables[VariableName].Value = variableInput;
@@ -48,17 +45,12 @@ namespace ExpressionEvaluatorUi.ViewModels
                 else
                     NullInput = false;
 
-                //if(VariableInput==null || string.IsNullOrEmpty(VariableInput.ToString()))
                 if (VariableInput == null || (VariableInput.ToString()).Length==0)
                 {
-                    //FormulaEditorViewModel.FormulaEditorVM.InputNull = true;
                     FormulaEditorHelper.Instance.InputNull = true;
                 }
-
             }
         }
-        private bool nullInput;
-
         public bool NullInput
         {
             get { return nullInput; }
@@ -68,13 +60,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged(nameof(NullInput));
             }
         }
-
-        public VariableInputViewModel()
-        {
-            NullInput = true;
-            ClearVariableCommand = new ClearVariableCommand(this);
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

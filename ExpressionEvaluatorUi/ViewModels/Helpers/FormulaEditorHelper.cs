@@ -9,11 +9,11 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
 {
     public class FormulaEditorHelper : IFormulaEditorHelper
     {
+        public Action AddVariable_CloseWindow { get; set; }
+        public Action EditVariable_CloseWindow { get; set; }
         public ObservableDictionary<string,Variable> Variables { get; set; }
         public Variable SelectedVariableTemp { get; set; }
         public bool InputNull { get; set; }
-        public Action AddVariable_CloseWindow { get; set; }
-        public Action EditVariable_CloseWindow { get; set; }
         public List<string> GetVariableTypeList()
         {
             List<string> VariableTypes = new List<string>() { "int", "float", "double", "char", "string", "bool", "object", "DateTime", "TimeSpan" };

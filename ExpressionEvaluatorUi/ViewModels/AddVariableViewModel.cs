@@ -12,14 +12,23 @@ namespace ExpressionEvaluatorUi.ViewModels
 {
     public class AddVariableViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        private string variableName;
+        private string variableType;
+        private string variableDescription;
+        private bool nameTypeChanged;
         public bool VariableNameChanged;
         public bool VariableTypeChanged;
-        private bool nameTypeChanged;
-
-        
-        //public static Action CloseWindow { get; set; }
-        
-
+        public AddVariableViewModel()
+        {
+            SaveNewVariableCommand = new SaveNewVariableCommand(this);
+            CloseWindowCommand = new CloseWindowCommand();
+            VariableTypes = new ObservableCollection<string>();
+            LoadVariableTypes();
+        }
+        public ObservableCollection<string> VariableTypes { get; set; }
+        public SaveNewVariableCommand SaveNewVariableCommand { get; set; }
+        public CloseWindowCommand CloseWindowCommand { get; set; }
         public bool NameTypeChanged
         {
             get { return nameTypeChanged; }
@@ -29,12 +38,7 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged(nameof(NameTypeChanged));
             }
         }
-
-
-
-        private  string variableName;
-
-        public  string VariableName
+        public string VariableName
         {
             get { return variableName; }
             set 
@@ -42,17 +46,9 @@ namespace ExpressionEvaluatorUi.ViewModels
                 variableName = value;
                 OnPropertyChanged(nameof(VariableName));
                 VariableNameChanged = true;
-                NameTypeChanged = VariableNameChanged & VariableTypeChanged;
-               
+                NameTypeChanged = VariableNameChanged & VariableTypeChanged;       
             }
-        }
-        
-        public  ObservableCollection<string> VariableTypes { get; set; }
-        
-
-        private string variableType;
-        
-
+        }      
         public string VariableType
         {
             get { return variableType; }
@@ -62,11 +58,8 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged(nameof(VariableType));
                 VariableTypeChanged = true;
                 NameTypeChanged = VariableNameChanged & VariableTypeChanged;
-
             }
         }
-        private string variableDescription;
-
         public string VariableDescription
         {
             get { return variableDescription; }
@@ -76,30 +69,20 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged(nameof(VariableDescription));
             }
         }
-        public SaveNewVariableCommand SaveNewVariableCommand { get; set; }
-        public CloseWindowCommand CloseWindowCommand { get; set; }
-        public AddVariableViewModel()
+        private void LoadVariableTypes()
         {
-            
-            SaveNewVariableCommand = new SaveNewVariableCommand(this);
-            CloseWindowCommand = new CloseWindowCommand();
-            VariableTypes = new ObservableCollection<string>();
-            LoadVariableTypes();
+            List<string> types = FormulaEditorHelper.Instance.GetVariableTypeList();
+            foreach (var type in types)
+            {
+                VariableTypes.Add(type);
+            }
+        }
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public void CreateNewVariable()
         {
-            //TODO: use dictionary
-            //check if already present or not
-            //bool isPresent = false;
-            //foreach(var variable in FormulaEditorHelper.Instance.Variables)
-            //{
-            //    if (variable.Name == variableName)
-            //    {
-            //        isPresent = true;
-            //        break;
-            //    }
-            //}
-            //if (!isPresent)
             if(!FormulaEditorHelper.Instance.Variables.ContainsKey(variableName))
             {
                 Variable Variable = new Variable
@@ -109,7 +92,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                     Description = variableDescription,
                     Value=null
                 };
-                //FormulaEditorViewModel.AddNewVariableToList(Variable);
                 FormulaEditorHelper.Instance.Variables.Add(variableName,Variable);
             }
             else
@@ -123,26 +105,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             VariableDescription = String.Empty;
             VariableNameChanged = false;
             VariableTypeChanged = false;
-            NameTypeChanged = false;
-            
+            NameTypeChanged = false;  
         }
-
-        private void LoadVariableTypes()
-        {
-            List<string> types = FormulaEditorHelper.Instance.GetVariableTypeList();
-            foreach(var type in types)
-            {
-                VariableTypes.Add(type);
-            }
-
-        }
-        
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
     }
 }

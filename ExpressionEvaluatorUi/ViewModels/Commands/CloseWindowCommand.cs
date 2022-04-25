@@ -17,12 +17,8 @@ namespace ExpressionEvaluatorUi.ViewModels.Commands
         {
             return true;
         }
-
         public void Execute(object parameter)
         {
-            //AddVariableViewModel.CloseWindow?.Invoke();
-            //EditVariableViewModel.CloseWindow?.Invoke();
-
             FormulaEditorHelper.Instance.AddVariable_CloseWindow?.Invoke();
             FormulaEditorHelper.Instance.EditVariable_CloseWindow?.Invoke();
         }

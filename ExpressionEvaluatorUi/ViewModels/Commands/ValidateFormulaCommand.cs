@@ -17,13 +17,10 @@ namespace ExpressionEvaluatorUi.ViewModels.Commands
         {
             _formulaEditorViewModel = formulaEditorViewModel;
         }
-
         public bool CanExecute(object parameter)
         {
-            return (bool)parameter;
-            
+            return (bool)parameter;    
         }
-
         public void Execute(object parameter)
         {
             _formulaEditorViewModel.ValidatingForumla();

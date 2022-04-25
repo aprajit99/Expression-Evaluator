@@ -19,7 +19,6 @@ namespace ExpressionEvaluatorUi.ViewModels.Commands
         {
             AddVariableViewModel = addVariableViewModel;
         }
-
         public bool CanExecute(object parameter)
         {
             bool test = (bool)parameter;
@@ -30,13 +29,10 @@ namespace ExpressionEvaluatorUi.ViewModels.Commands
             else
             {
                 return false;
-            }
-            
+            }         
         }
-
         public void Execute(object parameter)
         {
-
             AddVariableViewModel.CreateNewVariable();
         }
     }

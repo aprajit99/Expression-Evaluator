@@ -17,13 +17,11 @@ namespace ExpressionEvaluatorUi.ViewModels.Commands
         {
             EditVariableViewModel = editVariableViewModel;
         }
-
         public bool CanExecute(object parameter)
         {
             bool IsChanged = (bool)parameter;
             return IsChanged;
         }
-
         public void Execute(object parameter)
         {
             EditVariableViewModel.CreateUpdatedVariable();

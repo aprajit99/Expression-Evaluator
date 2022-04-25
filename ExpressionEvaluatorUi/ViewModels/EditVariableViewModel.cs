@@ -12,15 +12,22 @@ namespace ExpressionEvaluatorUi.ViewModels
 {
     public class EditVariableViewModel : INotifyPropertyChanged
     {
-        
+        public event PropertyChangedEventHandler PropertyChanged;
+        private bool isChanged;
+        private string variableNewName;
+        private string variableNewType;
+        private string variableNewDescription;
+        public EditVariableViewModel()
+        {
+            VariableTypes = new ObservableCollection<string>();
+            LoadVariableTypes();
+            UpdateVariableCommand = new UpdateVariableCommand(this);
+            CloseWindowCommand = new CloseWindowCommand();
+        }
         public ObservableCollection<string> VariableTypes { get; set; }
         public FormulaEditorViewModel FormulaEditorVM;
-        //public static Action CloseWindow { get; set; }
-
         public UpdateVariableCommand UpdateVariableCommand { get; set; }
         public CloseWindowCommand CloseWindowCommand { get; set; }
-        private bool isChanged;
-
         public bool IsChanged
         {
             get { return isChanged; }
@@ -30,10 +37,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged(nameof(IsChanged));
             }
         }
-
-
-        private string variableNewName;
-
         public string VariableNewName
         {
             get { return variableNewName; }
@@ -44,8 +47,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 IsChanged = true;
             }
         }
-        private string variableNewType;
-
         public string VariableNewType
         {
             get { return variableNewType; }
@@ -53,12 +54,9 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 variableNewType = value;
                 OnPropertyChanged(nameof(variableNewType));
-                IsChanged = true;
-                
+                IsChanged = true;           
             }
-        }
-        private string variableNewDescription;
-
+        } 
         public string VariableNewDescription
         {
             get { return variableNewDescription; }
@@ -69,14 +67,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 IsChanged = true;
             }
         }
-        public EditVariableViewModel()
-        {
-            VariableTypes=new ObservableCollection<string>();
-            LoadVariableTypes();
-            UpdateVariableCommand = new UpdateVariableCommand(this);
-            CloseWindowCommand = new CloseWindowCommand();
-            
-        }
         private void LoadVariableTypes()
         {
             List<string> types = FormulaEditorHelper.Instance.GetVariableTypeList();
@@ -84,7 +74,10 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 VariableTypes.Add(type);
             }
-
+        }
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public void LoadVariableDetails()
         {
@@ -102,15 +95,8 @@ namespace ExpressionEvaluatorUi.ViewModels
                 Description = VariableNewDescription
             };
             FormulaEditorVM.UpdateVariable(NewVariable);
-            // CloseWindow();
             FormulaEditorHelper.Instance.InputNull = true;
             FormulaEditorHelper.Instance.EditVariable_CloseWindow?.Invoke();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        }   
     }
 }

@@ -17,17 +17,13 @@ namespace ExpressionEvaluatorUi.ViewModels.Commands
         {
             _variableInputViewModel = variableInputViewModel;
         }
-
         public bool CanExecute(object parameter)
         {
             return !string.IsNullOrEmpty((string)parameter);
         }
-
         public void Execute(object parameter)
         {
             _variableInputViewModel.VariableInput = null;
-            
-
         }
     }
 }

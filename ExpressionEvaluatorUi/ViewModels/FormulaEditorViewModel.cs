@@ -20,17 +20,40 @@ namespace ExpressionEvaluatorUi.ViewModels
 {
     public class FormulaEditorViewModel:INotifyPropertyChanged
     {
-        
-        //public static Variable selectedVariableTemp;
-        public HashSet<string> UsedVariables;
-
-        public exp.Expression _func;
+        public event PropertyChangedEventHandler PropertyChanged;
+        private Variable selectedVariable;
+        private Operator selectedOperator;
+        private string formula;
+        private string testOutput;
+        private string selectedOutputType;
+        private bool canValidate;
         private bool isSelected;
-
-        //public static FormulaEditorViewModel FormulaEditorVM { get; set; }
+        private bool canRunTest;
+        public HashSet<string> UsedVariables;
         public ListViewHelper ListViewHelper;
-        //public bool InputNull { get; set; }
-
+        public exp.Expression _func;
+        public FormulaEditorViewModel()
+        {
+            VariableInputViewModels = new ObservableDictionary<string, VariableInputViewModel>();
+            OutputTypes = new ObservableCollection<string>();
+            UsedVariables = new HashSet<string>();
+            ListViewHelper = new ListViewHelper();
+            AddVariableCommand = new AddVariableCommand();
+            EditVariableCommand = new EditVariableCommand(this);
+            ValidateFormulaCommand = new ValidateFormulaCommand(this);
+            RunTestCommand = new RunTestCommand(this);
+            PrintCommand = new PrintCommand(this);
+            LoadOperators();
+            LoadOutputTypes();
+        }
+        public ObservableDictionary<string, VariableInputViewModel> VariableInputViewModels { get; set; }
+        public ObservableCollection<string> OutputTypes { get; set; }
+        public ListCollectionView operatorcollectionView { get; set; }
+        public AddVariableCommand AddVariableCommand { get; set; }
+        public EditVariableCommand EditVariableCommand { get; set; }
+        public ValidateFormulaCommand ValidateFormulaCommand { get; set; }
+        public RunTestCommand RunTestCommand { get; set; }
+        public PrintCommand PrintCommand { get; set; }
         public bool IsSelected
         {
             get { return isSelected; }
@@ -40,8 +63,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged(nameof(IsSelected));
             }
         }
-        private bool canValidate;
-
         public bool CanValidate
         {
             get { return canValidate; }
@@ -51,8 +72,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged(nameof(CanValidate));
             }
         }
-        private bool canRunTest;
-
         public bool CanRunTest
         {
             get { return canRunTest; }
@@ -62,9 +81,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged(nameof(CanRunTest));
             }
         }
-
-        private string formula;
-
         public string Formula
         {
             get { return formula; }
@@ -75,33 +91,7 @@ namespace ExpressionEvaluatorUi.ViewModels
                 CanRunTest = false;
                 TestOutput = null;
             }
-        }
-        
-        private Variable selectedVariable;
-
-        public Variable SelectedVariable
-        {
-            get { return selectedVariable; }
-            set
-            {   
-                selectedVariable = value;
-                OnPropertyChanged(nameof(SelectedVariable));
-            }
-        }
-
-        private Operator selectedOperator;
-
-        public Operator SelectedOperator
-        {
-            get { return selectedOperator; }
-            set
-            {
-                selectedOperator = value;
-                OnPropertyChanged(nameof(SelectedOperator));  
-            }
-        }
-        private string selectedOutputType;
-
+        }  
         public string SelectedOutputType
         {
             get { return selectedOutputType; }
@@ -109,12 +99,9 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 selectedOutputType = value;
                 OnPropertyChanged(nameof(SelectedOutputType));
-                CanValidate = true;
-                
+                CanValidate = true;               
             }
-        }
-        private string testOutput;
-       
+        }     
         public string TestOutput
         {
             get { return testOutput; }
@@ -124,104 +111,29 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged(nameof(TestOutput));
             }
         }
-
-
-
-
-
-        //public static ObservableCollection<Variable> Variables { get; set; }
-        public ObservableCollection<string> OutputTypes { get; set; }
-
-        public ListCollectionView operatorcollectionView { get; set; }
-        
-        public AddVariableCommand AddVariableCommand { get; set; }
-        public EditVariableCommand EditVariableCommand { get; set; }
-        public ValidateFormulaCommand ValidateFormulaCommand { get; set; }
-        public RunTestCommand RunTestCommand { get; set; }
-        public PrintCommand PrintCommand { get; set; }
-
-        //public ObservableCollection<VariableInputViewModel> VariableInputViewModels { get; set; }
-        public ObservableDictionary<string,VariableInputViewModel> VariableInputViewModels { get; set; }
-
-
-        public FormulaEditorViewModel()
+        public Variable SelectedVariable
         {
-            //FormulaEditorVM = this;
-            //Variables = new ObservableCollection<Variable>();
-            //VariableInputViewModels = new ObservableCollection<VariableInputViewModel>();
-            VariableInputViewModels = new ObservableDictionary<string, VariableInputViewModel>();
-            OutputTypes = new ObservableCollection<string>();
-            UsedVariables = new HashSet<string>();
-            ListViewHelper = new ListViewHelper();
-            LoadOperators();
-            LoadOutputTypes();
-            AddVariableCommand = new AddVariableCommand();
-            EditVariableCommand = new EditVariableCommand(this);
-            ValidateFormulaCommand = new ValidateFormulaCommand(this);
-            RunTestCommand = new RunTestCommand(this);
-            PrintCommand = new PrintCommand(this);
+            get { return selectedVariable; }
+            set
+            {
+                selectedVariable = value;
+                OnPropertyChanged(nameof(SelectedVariable));
+            }
         }
-        //public static void AddNewVariableToList(Variable Variable)
-        //{
-        //    FormulaEditorHelper.Instance.Variables.Add(Variable); 
-        //}
-        public void UpdateVariable(Variable NewVariable)
+        public Operator SelectedOperator
         {
-            //foreach (var variable in VariableInputViewModels)
-            //{
-            //    if (variable.VariableName == FormulaEditorHelper.Instance.SelectedVariableTemp.Name)
-            //    {
-
-            //        NewVariable.Value = variable.VariableInput;
-            //        VariableInputViewModels.Remove(variable);
-            //        UsedVariables.Remove(variable.VariableName); 
-            //        VariableInputViewModels.Add(new VariableInputViewModel()
-            //        {
-            //            VariableName = NewVariable.Name,
-            //            VariableInput = NewVariable.Value
-            //        });
-            //        UsedVariables.Add(NewVariable.Name); 
-            //        break;
-            //    }
-            //}
-            string Name = FormulaEditorHelper.Instance.SelectedVariableTemp.Name;
-            if (VariableInputViewModels.ContainsKey(Name))
+            get { return selectedOperator; }
+            set
             {
-                NewVariable.Value = VariableInputViewModels[Name].VariableInput;
-                VariableInputViewModels.Remove(Name);
-                UsedVariables.Remove(Name);
-                VariableInputViewModels.Add(NewVariable.Name, new VariableInputViewModel()
-                {
-                    VariableName = NewVariable.Name,
-                    VariableInput = NewVariable.Value
-                });
-                UsedVariables.Add(NewVariable.Name);
+                selectedOperator = value;
+                OnPropertyChanged(nameof(SelectedOperator));
             }
-
-
-            //foreach (var Variable in FormulaEditorHelper.Instance.Variables)
-            //{
-            //    if (Variable.Name == FormulaEditorHelper.Instance.SelectedVariableTemp.Name)
-            //    {
-
-            //        FormulaEditorHelper.Instance.Variables.Remove(Variable);
-            //        FormulaEditorHelper.Instance.Variables.Add(NewVariable);
-            //        break;
-            //    }
-            //}
-            if (FormulaEditorHelper.Instance.Variables.ContainsKey(Name))
-            {
-                FormulaEditorHelper.Instance.Variables.Remove(Name);
-                FormulaEditorHelper.Instance.Variables.Add(NewVariable.Name, NewVariable);
-            }
-            IsSelected = false;
         }
         private void AddVariableToFormula()
         {
             Formula += SelectedVariable.Name.ToString();
             FormulaEditorHelper.Instance.SelectedVariableTemp = SelectedVariable;
             SelectedVariable = null;
-            
         }
         private void LoadOperators()
         {
@@ -232,7 +144,7 @@ namespace ExpressionEvaluatorUi.ViewModels
         private void LoadOutputTypes()
         {
             List<string> outputlist = ListViewHelper.GetOutputTypeList();
-            foreach(string type in outputlist)
+            foreach (string type in outputlist)
             {
                 OutputTypes.Add(type);
             }
@@ -243,18 +155,12 @@ namespace ExpressionEvaluatorUi.ViewModels
             selectedOperator = null;
         }
         private void SelectedVariableFunctionality()
-        {            
+        {
             IsSelected = true;
-
             if (SelectedVariable != null)
             {
-                if(!UsedVariables.Contains(SelectedVariable.Name))
+                if (!UsedVariables.Contains(SelectedVariable.Name))
                 {
-                    //VariableInputViewModels.Add(new VariableInputViewModel()
-                    //{
-                    //    VariableName = SelectedVariable.Name
-                    //});
-                    //UsedVariables.Add(SelectedVariable.Name);
                     VariableInputViewModels.Add(SelectedVariable.Name, new VariableInputViewModel()
                     {
                         VariableName = SelectedVariable.Name
@@ -271,6 +177,40 @@ namespace ExpressionEvaluatorUi.ViewModels
                 AddOperatorToFormula();
             }
         }
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (propertyName == nameof(SelectedVariable))
+            {
+                this.SelectedVariableFunctionality();
+            }
+            if (propertyName == nameof(SelectedOperator))
+            {
+                this.SelectedOperatorFunctionality();
+            }
+        }
+        public void UpdateVariable(Variable NewVariable)
+        {
+            string Name = FormulaEditorHelper.Instance.SelectedVariableTemp.Name;
+            if (VariableInputViewModels.ContainsKey(Name))
+            {
+                NewVariable.Value = VariableInputViewModels[Name].VariableInput;
+                VariableInputViewModels.Remove(Name);
+                UsedVariables.Remove(Name);
+                VariableInputViewModels.Add(NewVariable.Name, new VariableInputViewModel()
+                {
+                    VariableName = NewVariable.Name,
+                    VariableInput = NewVariable.Value
+                });
+                UsedVariables.Add(NewVariable.Name);
+            }
+            if (FormulaEditorHelper.Instance.Variables.ContainsKey(Name))
+            {
+                FormulaEditorHelper.Instance.Variables.Remove(Name);
+                FormulaEditorHelper.Instance.Variables.Add(NewVariable.Name, NewVariable);
+            }
+            IsSelected = false;
+        } 
         public void ValidatingForumla()
         {
             if (string.IsNullOrEmpty(Formula))
@@ -304,15 +244,9 @@ namespace ExpressionEvaluatorUi.ViewModels
            
             StringBuilder msg = new StringBuilder("");
             foreach (var variable in FormulaEditorHelper.Instance.Variables)
-            {
-                
+            {  
                 if (!UsedVariables.Contains(variable.Value.Name))
                     continue;
-
-                //if (variable.Value == null || string.IsNullOrEmpty(variable.Value.ToString()))
-                //{
-                //    continue;
-                //}
                 if (variable.Value.Value == null)
                 {
                     continue;
@@ -361,13 +295,11 @@ namespace ExpressionEvaluatorUi.ViewModels
                 {
                     msg.AppendLine($"Variable \"{variable.Value.Name}\" : {e.Message}");
                 }
-
             }
             if (msg.ToString().Length != 0)
             {
                 MessageBox.Show(msg.ToString(), "Variable Input Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
-
                 return;
             }
 
@@ -393,8 +325,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 {
                     TestOutput = _func.Evaluate<TimeSpan>().ToString();
                 }
-
-
             }
             catch(exp.ExpressionException e)
             {
@@ -406,20 +336,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 MessageBox.Show(e.Message, "Output Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            if (propertyName == nameof(SelectedVariable))
-            {
-                this.SelectedVariableFunctionality();
-            }
-            if (propertyName == nameof(SelectedOperator))
-            {
-                this.SelectedOperatorFunctionality();
-            }
-        }
+        }   
     }
 }

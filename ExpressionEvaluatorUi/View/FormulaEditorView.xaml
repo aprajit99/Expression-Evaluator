@@ -162,12 +162,6 @@
                           Margin="2"
                           FontWeight="Normal"
                           ItemsSource="{Binding VariableInputViewModels}">
-                    <!--<ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Variable Name" Width="120"  />
-                            <GridViewColumn Header="Input" Width="120"  />
-                        </GridView>
-                    </ListView.View>-->
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -258,8 +252,6 @@
                                  Text="{Binding TestOutput}"/>
                     </Grid>
                 </GroupBox>
-
-
             </Grid>
         </GroupBox>
         <StackPanel Orientation="Horizontal"

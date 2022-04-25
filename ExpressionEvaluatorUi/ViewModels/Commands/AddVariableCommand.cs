@@ -15,12 +15,10 @@ namespace ExpressionEvaluatorUi.ViewModels.Commands
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
-
         public bool CanExecute(object parameter)
         {
             return true;
         }
-
         public void Execute(object parameter)
         {
             AddVariableView addVariableView = new AddVariableView();
