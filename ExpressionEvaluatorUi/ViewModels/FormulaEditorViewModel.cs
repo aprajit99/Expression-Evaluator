@@ -38,22 +38,22 @@ namespace ExpressionEvaluatorUi.ViewModels
             OutputTypes = new ObservableCollection<string>();
             UsedVariables = new HashSet<string>();
             ListViewHelper = new ListViewHelper();
-            AddVariableCommand = new AddVariableCommand();
-            EditVariableCommand = new EditVariableCommand(this);
-            ValidateFormulaCommand = new ValidateFormulaCommand(this);
-            RunTestCommand = new RunTestCommand(this);
-            PrintCommand = new PrintCommand(this);
+            AddVariableCommand = new RelayCommand(AddVariableExecute);
+            EditVariableCommand = new RelayCommand(EditVariableExecute,EditVariableCanExecute);
+            ValidateFormulaCommand = new RelayCommand(ValidateFormulaExecute, ValidateFormulaCanExecute);
+            RunTestCommand = new RelayCommand(RunTestExecute, RunTestCanExecute);
+            PrintCommand = new RelayCommand(PrintExecute,PrintCanExecute);
             LoadOperators();
             LoadOutputTypes();
         }
         public ObservableDictionary<string, VariableInputViewModel> VariableInputViewModels { get; set; }
         public ObservableCollection<string> OutputTypes { get; set; }
         public ListCollectionView operatorcollectionView { get; set; }
-        public AddVariableCommand AddVariableCommand { get; set; }
-        public EditVariableCommand EditVariableCommand { get; set; }
-        public ValidateFormulaCommand ValidateFormulaCommand { get; set; }
-        public RunTestCommand RunTestCommand { get; set; }
-        public PrintCommand PrintCommand { get; set; }
+        public RelayCommand AddVariableCommand { get; set; }
+        public RelayCommand EditVariableCommand { get; set; }
+        public RelayCommand ValidateFormulaCommand { get; set; }
+        public RelayCommand RunTestCommand { get; set; }
+        public RelayCommand PrintCommand { get; set; }
         public bool IsSelected
         {
             get { return isSelected; }
@@ -189,6 +189,47 @@ namespace ExpressionEvaluatorUi.ViewModels
                 this.SelectedOperatorFunctionality();
             }
         }
+        public void AddVariableExecute(object parameter)
+        {
+            AddVariableView addVariableView = new AddVariableView();
+            addVariableView.ShowDialog();
+        }
+        public void EditVariableExecute(object parameter)
+        {
+            EditVariableView editVariableView = new EditVariableView();
+            ((EditVariableViewModel)editVariableView.DataContext).FormulaEditorVM = this;
+            ((EditVariableViewModel)editVariableView.DataContext).LoadVariableDetails();
+            editVariableView.ShowDialog();
+        }
+        public bool EditVariableCanExecute(object parameter)
+        {
+            return (bool)parameter;
+        }
+        public void ValidateFormulaExecute(object parameter)
+        {
+            ValidatingForumla();
+        }
+        public bool ValidateFormulaCanExecute(object parameter)
+        {
+            return (bool)parameter;
+        }
+        public void RunTestExecute(object parameter)
+        {
+            RunTest();
+        }
+        public bool RunTestCanExecute(object parameter)
+        {
+            return (bool)parameter;
+        }
+        public void PrintExecute(object parameter)
+        {
+            Clipboard.SetText(TestOutput);
+            MessageBox.Show("Result copied to clipboard!", "Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        public bool PrintCanExecute(object parameter)
+        {
+            return !string.IsNullOrEmpty((string)parameter);
+        }
         public void UpdateVariable(Variable NewVariable)
         {
             string Name = FormulaEditorHelper.Instance.SelectedVariableTemp.Name;
@@ -228,11 +269,11 @@ namespace ExpressionEvaluatorUi.ViewModels
                 CanRunTest = true;
                 MessageBox.Show("Proceed to Run Test", "Validation Successful", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch(exp.ExpressionException e)
+            catch(Exception e)
             {
                 MessageBox.Show(e.Message, "Formula Error",
-                                MessageBoxButton.OK, MessageBoxImage.Error);  
-            }  
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+            } 
         }
         public void RunTest()
         {
@@ -326,12 +367,7 @@ namespace ExpressionEvaluatorUi.ViewModels
                     TestOutput = _func.Evaluate<TimeSpan>().ToString();
                 }
             }
-            catch(exp.ExpressionException e)
-            {
-                MessageBox.Show(e.Message, "Output Error",
-                                MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch(InvalidCastException e)
+            catch(Exception e)
             {
                 MessageBox.Show(e.Message, "Output Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);

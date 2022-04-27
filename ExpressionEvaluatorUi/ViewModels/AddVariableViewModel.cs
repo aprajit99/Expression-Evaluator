@@ -21,14 +21,14 @@ namespace ExpressionEvaluatorUi.ViewModels
         public bool VariableTypeChanged;
         public AddVariableViewModel()
         {
-            SaveNewVariableCommand = new SaveNewVariableCommand(this);
-            CloseWindowCommand = new CloseWindowCommand();
+            SaveNewVariableCommand = new RelayCommand(SaveVariableExecute, SaveVariableCanExecute);
+            CloseWindowCommand = new RelayCommand(CloseWindowExecute);
             VariableTypes = new ObservableCollection<string>();
             LoadVariableTypes();
         }
         public ObservableCollection<string> VariableTypes { get; set; }
-        public SaveNewVariableCommand SaveNewVariableCommand { get; set; }
-        public CloseWindowCommand CloseWindowCommand { get; set; }
+        public RelayCommand SaveNewVariableCommand { get; set; }
+        public RelayCommand CloseWindowCommand { get; set; }
         public bool NameTypeChanged
         {
             get { return nameTypeChanged; }
@@ -80,6 +80,18 @@ namespace ExpressionEvaluatorUi.ViewModels
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public void CloseWindowExecute(object parameter)
+        {
+            FormulaEditorHelper.Instance.AddVariable_CloseWindow?.Invoke();
+        }
+        public void SaveVariableExecute(object parameter)
+        {
+            CreateNewVariable();
+        }
+        public bool SaveVariableCanExecute(object parameter)
+        {
+            return (bool)parameter;
         }
         public void CreateNewVariable()
         {

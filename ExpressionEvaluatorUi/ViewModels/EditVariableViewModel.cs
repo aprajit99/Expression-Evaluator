@@ -21,13 +21,13 @@ namespace ExpressionEvaluatorUi.ViewModels
         {
             VariableTypes = new ObservableCollection<string>();
             LoadVariableTypes();
-            UpdateVariableCommand = new UpdateVariableCommand(this);
-            CloseWindowCommand = new CloseWindowCommand();
+            UpdateVariableCommand = new RelayCommand(UpdateVariableExecute, UpdateVariableCanExecute);
+            CloseWindowCommand = new RelayCommand(CloseWindowExecute);
         }
         public ObservableCollection<string> VariableTypes { get; set; }
         public FormulaEditorViewModel FormulaEditorVM;
-        public UpdateVariableCommand UpdateVariableCommand { get; set; }
-        public CloseWindowCommand CloseWindowCommand { get; set; }
+        public RelayCommand UpdateVariableCommand { get; set; }
+        public RelayCommand CloseWindowCommand { get; set; }
         public bool IsChanged
         {
             get { return isChanged; }
@@ -78,6 +78,18 @@ namespace ExpressionEvaluatorUi.ViewModels
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public void CloseWindowExecute(object parameter)
+        {
+            FormulaEditorHelper.Instance.EditVariable_CloseWindow?.Invoke();
+        }
+        public void UpdateVariableExecute(object parameter)
+        {
+            CreateUpdatedVariable();
+        }
+        public bool UpdateVariableCanExecute(object parameter)
+        {
+            return (bool)parameter;
         }
         public void LoadVariableDetails()
         {

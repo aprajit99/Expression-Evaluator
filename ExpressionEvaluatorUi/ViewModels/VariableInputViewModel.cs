@@ -17,9 +17,9 @@ namespace ExpressionEvaluatorUi.ViewModels
         public VariableInputViewModel()
         {
             NullInput = true;
-            ClearVariableCommand = new ClearVariableCommand(this);
+            ClearVariableCommand = new RelayCommand(ClearVariableExecute, ClearVariableCanExecute);
         }
-        public ClearVariableCommand ClearVariableCommand { get; set; }
+        public RelayCommand ClearVariableCommand { get; set; }
         public string VariableName
         {
             get { return variableName; }
@@ -63,6 +63,14 @@ namespace ExpressionEvaluatorUi.ViewModels
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public void ClearVariableExecute(object parameter)
+        {
+            VariableInput = null;
+        }
+        public bool ClearVariableCanExecute(object parameter)
+        {
+            return !string.IsNullOrEmpty((string)parameter);
         }
     }
 }
