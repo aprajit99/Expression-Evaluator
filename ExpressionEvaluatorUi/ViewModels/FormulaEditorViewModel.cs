@@ -18,7 +18,7 @@ using NSwag.Collections;
 
 namespace ExpressionEvaluatorUi.ViewModels
 {
-    public class FormulaEditorViewModel:INotifyPropertyChanged
+    public class FormulaEditorViewModel: BaseViewModel,INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private Variable selectedVariable;
@@ -191,15 +191,17 @@ namespace ExpressionEvaluatorUi.ViewModels
         }
         public void AddVariableExecute(object parameter)
         {
-            AddVariableView addVariableView = new AddVariableView();
-            addVariableView.ShowDialog();
+            FormulaEditorHelper.Instance.SelectedViewModel = new AddVariableViewModel();
+            AddEditVariableView addEditVariableView = new AddEditVariableView();
+            addEditVariableView.ShowDialog();
         }
         public void EditVariableExecute(object parameter)
         {
-            EditVariableView editVariableView = new EditVariableView();
-            ((EditVariableViewModel)editVariableView.DataContext).FormulaEditorVM = this;
-            ((EditVariableViewModel)editVariableView.DataContext).LoadVariableDetails();
-            editVariableView.ShowDialog();
+            FormulaEditorHelper.Instance.SelectedViewModel = new EditVariableViewModel();
+            AddEditVariableView addEditVariableView = new AddEditVariableView();
+            ((EditVariableViewModel)addEditVariableView.DataContext).FormulaEditorVM = this;
+            ((EditVariableViewModel)addEditVariableView.DataContext).LoadVariableDetails();
+            addEditVariableView.ShowDialog();
         }
         public bool EditVariableCanExecute(object parameter)
         {

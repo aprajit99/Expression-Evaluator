@@ -1,5 +1,4 @@
-﻿using ExpressionEvaluatorUi.ViewModels;
-using ExpressionEvaluatorUi.ViewModels.Helpers;
+﻿using ExpressionEvaluatorUi.ViewModels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,17 +14,15 @@ using System.Windows.Shapes;
 namespace ExpressionEvaluatorUi.View
 {
     /// <summary>
-    /// Interaction logic for AddVariableView.xaml
+    /// Interaction logic for AddEditVariableView.xaml
     /// </summary>
-    public partial class AddVariableView : Window
+    public partial class AddEditVariableView : Window
     {
-        public AddVariableView()
+        public AddEditVariableView()
         {
             InitializeComponent();
-            this.DataContext = new AddVariableViewModel();
-            //AddVariableViewModel.CloseWindow = Close;
-            FormulaEditorHelper.Instance.AddVariable_CloseWindow = Close;
-
+            this.DataContext = FormulaEditorHelper.Instance.SelectedViewModel;
+            FormulaEditorHelper.Instance.AddEditVariable_CloseWindow = Close;
         }
     }
 }
