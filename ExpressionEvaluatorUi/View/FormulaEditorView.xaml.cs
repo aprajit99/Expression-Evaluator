@@ -21,9 +21,7 @@ namespace ExpressionEvaluatorUi.View
     {
         public FormulaEditorView()
         {
-            
             InitializeComponent();
-            //this.DataContext = new FormulaEditorViewModel();
         }
     }
 }

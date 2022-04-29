@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 
@@ -98,7 +99,8 @@ namespace ExpressionEvaluatorUi.ViewModels
         }
         public void CreateNewVariable()
         {
-            if(!FormulaEditorHelper.Instance.Variables.ContainsKey(_name))
+            Variable var = FormulaEditorHelper.Instance.Variables.FirstOrDefault(v => v.Name == _name);
+            if(var==null)
             {
                 Variable Variable = new Variable
                 {
@@ -107,7 +109,7 @@ namespace ExpressionEvaluatorUi.ViewModels
                     Description = _description,
                     Value=null
                 };
-                FormulaEditorHelper.Instance.Variables.Add(_name,Variable);
+                FormulaEditorHelper.Instance.Variables.Add(Variable);
             }
             else
             {

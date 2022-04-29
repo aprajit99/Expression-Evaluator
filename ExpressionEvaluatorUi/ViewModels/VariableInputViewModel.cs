@@ -1,8 +1,10 @@
-﻿using ExpressionEvaluatorUi.ViewModels.Commands;
+﻿using ExpressionEvaluatorUi.Model;
+using ExpressionEvaluatorUi.ViewModels.Commands;
 using ExpressionEvaluatorUi.ViewModels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 
@@ -36,9 +38,10 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 variableInput = value;
                 OnPropertyChanged(nameof(VariableInput));
-                if (FormulaEditorHelper.Instance.Variables.ContainsKey(VariableName))
+                Variable var = FormulaEditorHelper.Instance.Variables.FirstOrDefault(v => v.Name == VariableName);
+                if (var != null)
                 {
-                    FormulaEditorHelper.Instance.Variables[VariableName].Value = variableInput;
+                    var.Value = variableInput;
                 }
                 if (VariableInput == null)
                     NullInput = true;

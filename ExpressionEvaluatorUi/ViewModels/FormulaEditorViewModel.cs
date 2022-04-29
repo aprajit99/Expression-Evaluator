@@ -14,7 +14,6 @@ using System.Windows;
 using System.Windows.Data;
 using exp=Vanderbilt.Biostatistics.Wfccm2;
 using ExpressionEvaluator.Procedures.Operators;
-using NSwag.Collections;
 
 namespace ExpressionEvaluatorUi.ViewModels
 {
@@ -34,7 +33,7 @@ namespace ExpressionEvaluatorUi.ViewModels
         public exp.Expression _func;
         public FormulaEditorViewModel()
         {
-            VariableInputViewModels = new ObservableDictionary<string, VariableInputViewModel>();
+            VariableInputViewModels = new ObservableCollection<VariableInputViewModel>();
             OutputTypes = new ObservableCollection<string>();
             UsedVariables = new HashSet<string>();
             ListViewHelper = new ListViewHelper();
@@ -46,7 +45,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             LoadOperators();
             LoadOutputTypes();
         }
-        public ObservableDictionary<string, VariableInputViewModel> VariableInputViewModels { get; set; }
+        public ObservableCollection<VariableInputViewModel> VariableInputViewModels { get; set; }
         public ObservableCollection<string> OutputTypes { get; set; }
         public ListCollectionView operatorcollectionView { get; set; }
         public RelayCommand AddVariableCommand { get; set; }
@@ -161,7 +160,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 if (!UsedVariables.Contains(SelectedVariable.Name))
                 {
-                    VariableInputViewModels.Add(SelectedVariable.Name, new VariableInputViewModel()
+                    VariableInputViewModels.Add(new VariableInputViewModel()
                     {
                         VariableName = SelectedVariable.Name
                     });
@@ -235,22 +234,24 @@ namespace ExpressionEvaluatorUi.ViewModels
         public void UpdateVariable(Variable NewVariable)
         {
             string Name = FormulaEditorHelper.Instance.SelectedVariableTemp.Name;
-            if (VariableInputViewModels.ContainsKey(Name))
+            VariableInputViewModel _var = VariableInputViewModels.FirstOrDefault(v => v.VariableName == Name);
+            if (_var!=null)
             {
-                NewVariable.Value = VariableInputViewModels[Name].VariableInput;
-                VariableInputViewModels.Remove(Name);
+                NewVariable.Value = _var.VariableInput;
+                VariableInputViewModels.Remove(_var);
                 UsedVariables.Remove(Name);
-                VariableInputViewModels.Add(NewVariable.Name, new VariableInputViewModel()
+                VariableInputViewModels.Add(new VariableInputViewModel()
                 {
                     VariableName = NewVariable.Name,
                     VariableInput = NewVariable.Value
                 });
                 UsedVariables.Add(NewVariable.Name);
             }
-            if (FormulaEditorHelper.Instance.Variables.ContainsKey(Name))
+            Variable var = FormulaEditorHelper.Instance.Variables.FirstOrDefault(v => v.Name == Name);
+            if(var!=null)
             {
-                FormulaEditorHelper.Instance.Variables.Remove(Name);
-                FormulaEditorHelper.Instance.Variables.Add(NewVariable.Name, NewVariable);
+                FormulaEditorHelper.Instance.Variables.Remove(var);
+                FormulaEditorHelper.Instance.Variables.Add(NewVariable);
             }
             IsSelected = false;
         } 
@@ -288,55 +289,55 @@ namespace ExpressionEvaluatorUi.ViewModels
             StringBuilder msg = new StringBuilder("");
             foreach (var variable in FormulaEditorHelper.Instance.Variables)
             {  
-                if (!UsedVariables.Contains(variable.Value.Name))
+                if (!UsedVariables.Contains(variable.Name))
                     continue;
-                if (variable.Value.Value == null)
+                if (variable.Value == null)
                 {
                     continue;
                 }
-                else if (variable.Value.Value.ToString().Length == 0)
+                else if (variable.Value.ToString().Length == 0)
                 {
-                    if (variable.Value.Type != "string")
+                    if (variable.Type != "string")
                         continue;
                 }
 
                 try
                 {
-                    switch (variable.Value.Type)
+                    switch (variable.Type)
                     {
                         case "int":
-                            variable.Value.Value = Convert.ChangeType(variable.Value.Value, typeof(int));
-                            _func.AddSetVariable(variable.Value.Name, (int)variable.Value.Value);
+                            variable.Value = Convert.ChangeType(variable.Value, typeof(int));
+                            _func.AddSetVariable(variable.Name, (int)variable.Value);
                             break;
                         case "float":
-                            variable.Value.Value = Convert.ChangeType(variable.Value.Value, typeof(float));
-                            _func.AddSetVariable(variable.Value.Name, (float)variable.Value.Value);
+                            variable.Value = Convert.ChangeType(variable.Value, typeof(float));
+                            _func.AddSetVariable(variable.Name, (float)variable.Value);
                             break;
                         case "double":
-                            variable.Value.Value = Convert.ChangeType(variable.Value.Value, typeof(double));
-                            _func.AddSetVariable(variable.Value.Name, (double)variable.Value.Value);
+                            variable.Value = Convert.ChangeType(variable.Value, typeof(double));
+                            _func.AddSetVariable(variable.Name, (double)variable.Value);
                             break;
                         case "string":
-                            variable.Value.Value = Convert.ChangeType(variable.Value.Value, typeof(string));
-                            _func.AddSetVariable(variable.Value.Name, (string)variable.Value.Value);
+                            variable.Value = Convert.ChangeType(variable.Value, typeof(string));
+                            _func.AddSetVariable(variable.Name, (string)variable.Value);
                             break;
                         case "bool":
-                            variable.Value.Value = Convert.ChangeType(variable.Value.Value, typeof(bool));
-                            _func.AddSetVariable(variable.Value.Name, (bool)variable.Value.Value);
+                            variable.Value = Convert.ChangeType(variable.Value, typeof(bool));
+                            _func.AddSetVariable(variable.Name, (bool)variable.Value);
                             break;
                         case "DateTime":
-                            variable.Value.Value = Convert.ToDateTime(variable.Value.Value);
-                            _func.AddSetVariable(variable.Value.Name, (DateTime)variable.Value.Value);
+                            variable.Value = Convert.ToDateTime(variable.Value);
+                            _func.AddSetVariable(variable.Name, (DateTime)variable.Value);
                             break;
                         case "TimeSpan":
-                            variable.Value.Value = TimeSpan.Parse((string)variable.Value.Value);
-                            _func.AddSetVariable(variable.Value.Name, (TimeSpan)variable.Value.Value);
+                            variable.Value = TimeSpan.Parse((string)variable.Value);
+                            _func.AddSetVariable(variable.Name, (TimeSpan)variable.Value);
                             break;
                     }
                 }
                 catch (Exception e)
                 {
-                    msg.AppendLine($"Variable \"{variable.Value.Name}\" : {e.Message}");
+                    msg.AppendLine($"Variable \"{variable.Name}\" : {e.Message}");
                 }
             }
             if (msg.ToString().Length != 0)

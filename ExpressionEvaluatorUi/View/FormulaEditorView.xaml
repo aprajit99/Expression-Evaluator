@@ -104,20 +104,19 @@
                           DataContext="{StaticResource FormulaEditorHelper}"
                           ItemsSource="{Binding Variables}"
                           SelectedValue="{Binding ElementName=MainGrid,Path=DataContext.SelectedVariable,Mode=TwoWay}"
-                          SelectedValuePath="Value"
                           FontWeight="Normal">
                     <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Name" Width="120"  DisplayMemberBinding="{Binding Value.Name}"/>
-                                <GridViewColumn Header="Type" Width="120"  DisplayMemberBinding="{Binding Value.Type}" />
-                                <GridViewColumn Header="Description" Width="250" DisplayMemberBinding="{Binding Value.Description}" />
+                                <GridViewColumn Header="Name" Width="120"  DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Type" Width="120"  DisplayMemberBinding="{Binding Type}" />
+                                <GridViewColumn Header="Description" Width="250" DisplayMemberBinding="{Binding Description}" />
                             </GridView>
                     </ListView.View>
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                             </Style>
-                     </ListView.ItemContainerStyle>
+                        </ListView.ItemContainerStyle>
                         
                     </ListView>
                 </Grid>
@@ -170,7 +169,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="80"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Content="{Binding Value.VariableName}"
+                                <Label Content="{Binding VariableName}"
                                        Width="100"
                                        HorizontalContentAlignment="Center"
                                        VerticalContentAlignment="Center"/>
@@ -179,10 +178,10 @@
                                            VerticalAlignment="Center"
                                            Foreground="LightSteelBlue"
                                            FontStyle="Italic"
-                                           Visibility="{Binding Value.NullInput,Converter={StaticResource BooleanToVisibilityConverter}}">
+                                           Visibility="{Binding NullInput,Converter={StaticResource BooleanToVisibilityConverter}}">
                                 </TextBlock>
                                 <TextBox Grid.Column="1"
-                                         Text="{Binding Value.VariableInput,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                         Text="{Binding VariableInput,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                          VerticalContentAlignment="Center"
                                          Height="25"
                                          Margin="1"
@@ -199,8 +198,8 @@
                                         BorderBrush="White"
                                         BorderThickness="0"
                                         Background="Transparent"
-                                        CommandParameter="{Binding Value.VariableInput}"
-                                        Command="{Binding Value.ClearVariableCommand}">
+                                        CommandParameter="{Binding VariableInput}"
+                                        Command="{Binding ClearVariableCommand}">
                                     <Button.Resources>
                                         <Style TargetType="Border">
                                             <Setter Property="CornerRadius" Value="5"/>
