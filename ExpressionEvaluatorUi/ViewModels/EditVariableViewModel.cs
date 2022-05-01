@@ -10,9 +10,8 @@ using System.Windows;
 
 namespace ExpressionEvaluatorUi.ViewModels
 {
-    public class EditVariableViewModel : BaseViewModel,INotifyPropertyChanged
+    public class EditVariableViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         private bool isEnabled;
         private string _name;
         private string _type;
@@ -77,10 +76,6 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 VariableTypes.Add(type);
             }
-        }
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public void CloseWindowExecute(object parameter)
         {

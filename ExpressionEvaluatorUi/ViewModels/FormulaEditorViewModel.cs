@@ -17,9 +17,8 @@ using ExpressionEvaluator.Procedures.Operators;
 
 namespace ExpressionEvaluatorUi.ViewModels
 {
-    public class FormulaEditorViewModel: BaseViewModel,INotifyPropertyChanged
+    public class FormulaEditorViewModel: BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         private Variable selectedVariable;
         private Operator selectedOperator;
         private string formula;
@@ -42,17 +41,21 @@ namespace ExpressionEvaluatorUi.ViewModels
             ValidateFormulaCommand = new RelayCommand(ValidateFormulaExecute, ValidateFormulaCanExecute);
             RunTestCommand = new RelayCommand(RunTestExecute, RunTestCanExecute);
             PrintCommand = new RelayCommand(PrintExecute,PrintCanExecute);
+            Variable_Selected += SelectedVariableFunctionality;
+            Operator_Selected += SelectedOperatorFunctionality;
             LoadOperators();
             LoadOutputTypes();
         }
         public ObservableCollection<VariableInputViewModel> VariableInputViewModels { get; set; }
         public ObservableCollection<string> OutputTypes { get; set; }
-        public ListCollectionView operatorcollectionView { get; set; }
+        public ListCollectionView OperatorcollectionView { get; set; }
         public RelayCommand AddVariableCommand { get; set; }
         public RelayCommand EditVariableCommand { get; set; }
         public RelayCommand ValidateFormulaCommand { get; set; }
         public RelayCommand RunTestCommand { get; set; }
         public RelayCommand PrintCommand { get; set; }
+        public Action Variable_Selected { get; set; }
+        public Action Operator_Selected { get; set; }
         public bool IsSelected
         {
             get { return isSelected; }
@@ -117,6 +120,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 selectedVariable = value;
                 OnPropertyChanged(nameof(SelectedVariable));
+                Variable_Selected?.Invoke();
             }
         }
         public Operator SelectedOperator
@@ -126,6 +130,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 selectedOperator = value;
                 OnPropertyChanged(nameof(SelectedOperator));
+                Operator_Selected?.Invoke();
             }
         }
         private void AddVariableToFormula()
@@ -137,8 +142,8 @@ namespace ExpressionEvaluatorUi.ViewModels
         private void LoadOperators()
         {
             List<Operator> operatorlist = ListViewHelper.GetOperatorList();
-            operatorcollectionView = new ListCollectionView(operatorlist);
-            operatorcollectionView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
+            OperatorcollectionView = new ListCollectionView(operatorlist);
+            OperatorcollectionView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
         }
         private void LoadOutputTypes()
         {
@@ -174,18 +179,6 @@ namespace ExpressionEvaluatorUi.ViewModels
             if (SelectedOperator != null)
             {
                 AddOperatorToFormula();
-            }
-        }
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            if (propertyName == nameof(SelectedVariable))
-            {
-                this.SelectedVariableFunctionality();
-            }
-            if (propertyName == nameof(SelectedOperator))
-            {
-                this.SelectedOperatorFunctionality();
             }
         }
         public void AddVariableExecute(object parameter)

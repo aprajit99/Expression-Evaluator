@@ -131,7 +131,7 @@
                           Grid.Column="1"
                           Margin="2"
                           FontWeight="Normal"
-                          ItemsSource="{Binding operatorcollectionView}"
+                          ItemsSource="{Binding OperatorcollectionView}"
                           SelectedValue="{Binding SelectedOperator}">
                     <ListView.View>
                         <GridView>

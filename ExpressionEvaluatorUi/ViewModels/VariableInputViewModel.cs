@@ -10,9 +10,8 @@ using System.Windows;
 
 namespace ExpressionEvaluatorUi.ViewModels
 {
-    public class VariableInputViewModel : INotifyPropertyChanged
+    public class VariableInputViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         private string variableName;
         private object variableInput;
         private bool nullInput;
@@ -62,10 +61,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 nullInput = value;
                 OnPropertyChanged(nameof(NullInput));
             }
-        }
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public void ClearVariableExecute(object parameter)
         {

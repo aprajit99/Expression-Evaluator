@@ -11,9 +11,8 @@ using System.Windows;
 
 namespace ExpressionEvaluatorUi.ViewModels
 {
-    public class AddVariableViewModel : BaseViewModel,INotifyPropertyChanged
+    public class AddVariableViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         private string _name;
         private string _type;
         private string _description;
@@ -80,10 +79,6 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 VariableTypes.Add(type);
             }
-        }
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public void CloseWindowExecute(object parameter)
         {
