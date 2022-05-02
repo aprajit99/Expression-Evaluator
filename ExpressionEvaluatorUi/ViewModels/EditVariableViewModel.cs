@@ -20,9 +20,9 @@ namespace ExpressionEvaluatorUi.ViewModels
         {
             VariableTypes = new ObservableCollection<string>();
             LoadVariableTypes();
-            UpdateVariableCommand = new RelayCommand(UpdateVariableExecute, UpdateVariableCanExecute);
+            UpdateVariableCommand = new RelayCommand(UpdateVariableExecute, (object parameter)=> { return (bool)parameter; });
             ButtonCommand = UpdateVariableCommand;
-            CloseWindowCommand = new RelayCommand(CloseWindowExecute);
+            CloseWindowCommand = new RelayCommand((object parameter)=> { FormulaEditorHelper.Instance.AddEditVariable_CloseWindow?.Invoke(); });
         }
         public ObservableCollection<string> VariableTypes { get; set; }
         public FormulaEditorViewModel FormulaEditorVM;
@@ -77,24 +77,16 @@ namespace ExpressionEvaluatorUi.ViewModels
                 VariableTypes.Add(type);
             }
         }
-        public void CloseWindowExecute(object parameter)
-        {
-            FormulaEditorHelper.Instance.AddEditVariable_CloseWindow?.Invoke();
-        }
         public void UpdateVariableExecute(object parameter)
         {
             CreateUpdatedVariable();
             FormulaEditorHelper.Instance.AddEditVariable_CloseWindow?.Invoke();
         }
-        public bool UpdateVariableCanExecute(object parameter)
-        {
-            return (bool)parameter;
-        }
         public void LoadVariableDetails()
         {
-            Name = FormulaEditorHelper.Instance.SelectedVariableTemp.Name;
-            Type = FormulaEditorHelper.Instance.SelectedVariableTemp.Type;
-            Description = FormulaEditorHelper.Instance.SelectedVariableTemp.Description;
+            Name = FormulaEditorHelper.Instance.SelectedVariable_Copy.Name;
+            Type = FormulaEditorHelper.Instance.SelectedVariable_Copy.Type;
+            Description = FormulaEditorHelper.Instance.SelectedVariable_Copy.Description;
             IsEnabled = false;
         }
         public void CreateUpdatedVariable()

@@ -18,7 +18,7 @@ namespace ExpressionEvaluatorUi.ViewModels
         public VariableInputViewModel()
         {
             NullInput = true;
-            ClearVariableCommand = new RelayCommand(ClearVariableExecute, ClearVariableCanExecute);
+            ClearVariableCommand = new RelayCommand((object parameter)=> { VariableInput = null; }, (object parameter)=> { return !string.IsNullOrEmpty((string)parameter); });
         }
         public RelayCommand ClearVariableCommand { get; set; }
         public string VariableName
@@ -37,15 +37,12 @@ namespace ExpressionEvaluatorUi.ViewModels
             {
                 variableInput = value;
                 OnPropertyChanged(nameof(VariableInput));
-                Variable var = FormulaEditorHelper.Instance.Variables.FirstOrDefault(v => v.Name == VariableName);
+                Variable var = (Variable)FormulaEditorHelper.Instance.Variables.FirstOrDefault(v => v.Name == VariableName);
                 if (var != null)
                 {
                     var.Value = variableInput;
                 }
-                if (VariableInput == null)
-                    NullInput = true;
-                else
-                    NullInput = false;
+                NullInput = VariableInput == null;
 
                 if (VariableInput == null || (VariableInput.ToString()).Length==0)
                 {
@@ -61,14 +58,6 @@ namespace ExpressionEvaluatorUi.ViewModels
                 nullInput = value;
                 OnPropertyChanged(nameof(NullInput));
             }
-        }
-        public void ClearVariableExecute(object parameter)
-        {
-            VariableInput = null;
-        }
-        public bool ClearVariableCanExecute(object parameter)
-        {
-            return !string.IsNullOrEmpty((string)parameter);
         }
     }
 }

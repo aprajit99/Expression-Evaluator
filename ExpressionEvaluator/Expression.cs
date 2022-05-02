@@ -445,7 +445,8 @@ namespace Vanderbilt.Biostatistics.Wfccm2
                 if (op.Name == "if"
                     || op.Name == "elseif"
                     || op.Name == "else") {
-                    switch (op.Name) {                        case "elseif":
+                    switch (op.Name) {                        
+                        case "elseif":
                             if (currentConditionalDepth > 0) {
                                 // Eat the result.
                                 continue;

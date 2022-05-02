@@ -21,9 +21,9 @@ namespace ExpressionEvaluatorUi.ViewModels
         public bool VariableTypeChanged;
         public AddVariableViewModel()
         {
-            SaveNewVariableCommand = new RelayCommand(SaveVariableExecute, SaveVariableCanExecute);
+            SaveNewVariableCommand = new RelayCommand((object parameter)=> CreateNewVariable(), (object parameter)=> { return (bool)parameter; });
             ButtonCommand = SaveNewVariableCommand;
-            CloseWindowCommand = new RelayCommand(CloseWindowExecute);
+            CloseWindowCommand = new RelayCommand((object parameter)=> { FormulaEditorHelper.Instance.AddEditVariable_CloseWindow?.Invoke(); });
             VariableTypes = new ObservableCollection<string>();
             LoadVariableTypes();
         }
@@ -72,6 +72,15 @@ namespace ExpressionEvaluatorUi.ViewModels
                 OnPropertyChanged(nameof(Description));
             }
         }
+        private void Clear()
+        {
+            Name = String.Empty;
+            Type = String.Empty;
+            Description = String.Empty;
+            VariableNameChanged = false;
+            VariableTypeChanged = false;
+            IsEnabled = false;
+        }
         private void LoadVariableTypes()
         {
             List<string> types = FormulaEditorHelper.Instance.GetVariableTypeList();
@@ -80,21 +89,9 @@ namespace ExpressionEvaluatorUi.ViewModels
                 VariableTypes.Add(type);
             }
         }
-        public void CloseWindowExecute(object parameter)
-        {
-            FormulaEditorHelper.Instance.AddEditVariable_CloseWindow?.Invoke();
-        }
-        public void SaveVariableExecute(object parameter)
-        {
-            CreateNewVariable();
-        }
-        public bool SaveVariableCanExecute(object parameter)
-        {
-            return (bool)parameter;
-        }
         public void CreateNewVariable()
         {
-            Variable var = FormulaEditorHelper.Instance.Variables.FirstOrDefault(v => v.Name == _name);
+            Variable var = (Variable)FormulaEditorHelper.Instance.Variables.FirstOrDefault(v => v.Name == _name);
             if(var==null)
             {
                 Variable Variable = new Variable
@@ -112,12 +109,7 @@ namespace ExpressionEvaluatorUi.ViewModels
                                 "Invalid Variable Name",
                                 MessageBoxButton.OK,MessageBoxImage.Error);
             }
-            Name = String.Empty;
-            Type = String.Empty;
-            Description = String.Empty;
-            VariableNameChanged = false;
-            VariableTypeChanged = false;
-            IsEnabled = false;  
+            Clear();
         }
     }
 }

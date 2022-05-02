@@ -27,22 +27,22 @@ namespace ExpressionEvaluatorUi.ViewModels
         private bool canValidate;
         private bool isSelected;
         private bool canRunTest;
-        public HashSet<string> UsedVariables;
+        public List<string> UsedVariables;
         public ListViewHelper ListViewHelper;
         public exp.Expression _func;
         public FormulaEditorViewModel()
         {
             VariableInputViewModels = new ObservableCollection<VariableInputViewModel>();
             OutputTypes = new ObservableCollection<string>();
-            UsedVariables = new HashSet<string>();
+            UsedVariables = new List<string>();
             ListViewHelper = new ListViewHelper();
             AddVariableCommand = new RelayCommand(AddVariableExecute);
-            EditVariableCommand = new RelayCommand(EditVariableExecute,EditVariableCanExecute);
-            ValidateFormulaCommand = new RelayCommand(ValidateFormulaExecute, ValidateFormulaCanExecute);
-            RunTestCommand = new RelayCommand(RunTestExecute, RunTestCanExecute);
-            PrintCommand = new RelayCommand(PrintExecute,PrintCanExecute);
-            Variable_Selected += SelectedVariableFunctionality;
-            Operator_Selected += SelectedOperatorFunctionality;
+            EditVariableCommand = new RelayCommand(EditVariableExecute, (object parameter) =>{ return (bool)parameter; });
+            ValidateFormulaCommand = new RelayCommand((object parameter)=>ValidateForumla(), (object parameter) => { return (bool)parameter; });
+            RunTestCommand = new RelayCommand((object parameter) => RunTest(), (object parameter) => { return (bool)parameter; });
+            PrintCommand = new RelayCommand(PrintExecute, (object parameter) => { return !string.IsNullOrEmpty((string)parameter); });
+            Variable_Selected += AddVariable;
+            Operator_Selected += AddOperator;
             LoadOperators();
             LoadOutputTypes();
         }
@@ -136,7 +136,7 @@ namespace ExpressionEvaluatorUi.ViewModels
         private void AddVariableToFormula()
         {
             Formula += SelectedVariable.Name.ToString();
-            FormulaEditorHelper.Instance.SelectedVariableTemp = SelectedVariable;
+            FormulaEditorHelper.Instance.SelectedVariable_Copy = SelectedVariable;
             SelectedVariable = null;
         }
         private void LoadOperators()
@@ -158,7 +158,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             Formula += SelectedOperator.Type.ToString();
             selectedOperator = null;
         }
-        private void SelectedVariableFunctionality()
+        private void AddVariable()
         {
             IsSelected = true;
             if (SelectedVariable != null)
@@ -174,7 +174,7 @@ namespace ExpressionEvaluatorUi.ViewModels
                 AddVariableToFormula();
             }
         }
-        private void SelectedOperatorFunctionality()
+        private void AddOperator()
         {
             if (SelectedOperator != null)
             {
@@ -195,38 +195,14 @@ namespace ExpressionEvaluatorUi.ViewModels
             ((EditVariableViewModel)addEditVariableView.DataContext).LoadVariableDetails();
             addEditVariableView.ShowDialog();
         }
-        public bool EditVariableCanExecute(object parameter)
-        {
-            return (bool)parameter;
-        }
-        public void ValidateFormulaExecute(object parameter)
-        {
-            ValidatingForumla();
-        }
-        public bool ValidateFormulaCanExecute(object parameter)
-        {
-            return (bool)parameter;
-        }
-        public void RunTestExecute(object parameter)
-        {
-            RunTest();
-        }
-        public bool RunTestCanExecute(object parameter)
-        {
-            return (bool)parameter;
-        }
         public void PrintExecute(object parameter)
         {
             Clipboard.SetText(TestOutput);
             MessageBox.Show("Result copied to clipboard!", "Successful", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-        public bool PrintCanExecute(object parameter)
-        {
-            return !string.IsNullOrEmpty((string)parameter);
-        }
         public void UpdateVariable(Variable NewVariable)
         {
-            string Name = FormulaEditorHelper.Instance.SelectedVariableTemp.Name;
+            string Name = FormulaEditorHelper.Instance.SelectedVariable_Copy.Name;
             VariableInputViewModel _var = VariableInputViewModels.FirstOrDefault(v => v.VariableName == Name);
             if (_var!=null)
             {
@@ -240,7 +216,7 @@ namespace ExpressionEvaluatorUi.ViewModels
                 });
                 UsedVariables.Add(NewVariable.Name);
             }
-            Variable var = FormulaEditorHelper.Instance.Variables.FirstOrDefault(v => v.Name == Name);
+            Variable var = (Variable)FormulaEditorHelper.Instance.Variables.FirstOrDefault(v => v.Name == Name);
             if(var!=null)
             {
                 FormulaEditorHelper.Instance.Variables.Remove(var);
@@ -248,7 +224,7 @@ namespace ExpressionEvaluatorUi.ViewModels
             }
             IsSelected = false;
         } 
-        public void ValidatingForumla()
+        public void ValidateForumla()
         {
             if (string.IsNullOrEmpty(Formula))
             {
@@ -263,7 +239,7 @@ namespace ExpressionEvaluatorUi.ViewModels
                     Function = Formula
                 };
                 CanRunTest = true;
-                MessageBox.Show("Proceed to Run Test", "Validation Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Formula is successfully validated.", "Validation Successful", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch(Exception e)
             {

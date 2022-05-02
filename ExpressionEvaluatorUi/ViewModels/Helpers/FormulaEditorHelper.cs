@@ -9,8 +9,8 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
     public class FormulaEditorHelper : IFormulaEditorHelper
     {
         public Action AddEditVariable_CloseWindow { get; set; }
-        public ObservableCollection<Variable> Variables { get; set; }
-        public Variable SelectedVariableTemp { get; set; }
+        public ObservableCollection<IVariable> Variables { get; set; }
+        public Variable SelectedVariable_Copy { get; set; }
         public bool InputNull { get; set; }
         public BaseViewModel SelectedViewModel { get; set; }
         public List<string> GetVariableTypeList()
@@ -20,7 +20,7 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
         }
         public FormulaEditorHelper() 
         {
-            Variables = new ObservableCollection<Variable>();
+            Variables = new ObservableCollection<IVariable>();
         }
         private static FormulaEditorHelper instance = null;
         public static FormulaEditorHelper Instance

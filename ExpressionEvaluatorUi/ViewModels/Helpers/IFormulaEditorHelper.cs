@@ -9,8 +9,8 @@ namespace ExpressionEvaluatorUi.ViewModels.Helpers
     public interface IFormulaEditorHelper
     {
         public Action AddEditVariable_CloseWindow { get; set; }
-        public ObservableCollection<Variable> Variables { get; set; }
-        public Variable SelectedVariableTemp { get; set; }
+        public ObservableCollection<IVariable> Variables { get; set; }
+        public Variable SelectedVariable_Copy { get; set; }
         public bool InputNull { get; set; }
         public BaseViewModel SelectedViewModel { get; set; }
         public List<string> GetVariableTypeList();
