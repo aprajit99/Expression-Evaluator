@@ -9,7 +9,7 @@ namespace ExpressionEvaluator.Procedures.Operators
         {
             _name2 = "And";
             Category = "Logical";
-            Description = "Check if at least one of the operand is true.";
+            Description = "Check if both the operands are true.";
             BoolBoolBool = (x, y) => x && y;
         }
     }

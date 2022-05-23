@@ -10,7 +10,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "ToNumber";
             Category = "String";
-            Description = "Returns the number equivalent of the given string";
+            Description = "Returns the number equivalent of the given string.";
             StringDecimal = x => {
                 try {
                     return decimal.Parse(x);

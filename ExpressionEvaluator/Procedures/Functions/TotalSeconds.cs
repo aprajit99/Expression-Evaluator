@@ -9,6 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "TotalSeconds";
             Category = "Date/Time";
+            Description = "Returns the total no. of seconds between two given timestamps.";
             TimespanDecimal = x => (decimal)x.TotalSeconds;
         }
     }

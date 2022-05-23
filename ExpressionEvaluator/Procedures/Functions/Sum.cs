@@ -9,7 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "Sum";
             Category = "Mathematical Function";
-            Description = "Returns the sum of the given numbers";
+            Description = "Returns the sum of the given numbers.";
             DecimalDecimalOperandList = x => {
                 decimal sum = 0;
                 foreach (var i in x) {

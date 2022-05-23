@@ -10,7 +10,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "Concatenate";
             Category = "String";
-            Description = "Appending one string to the end of another string";
+            Description = "Appends one string to the end of another string.";
             ObjectStringOperandList = x => x.Aggregate("", (current, i) => current + i);
         }
     }

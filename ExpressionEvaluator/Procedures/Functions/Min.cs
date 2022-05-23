@@ -10,7 +10,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "Min";
             Category = "Mathematical Function";
-            Description = "Returns the minimum of the specified numbers";
+            Description = "Returns the minimum of the specified numbers.";
             DecimalDecimalOperandList = x => x.Min();
         }
     }

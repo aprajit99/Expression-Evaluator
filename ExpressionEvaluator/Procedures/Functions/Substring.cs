@@ -9,7 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "Substring";
             Category = "String";
-            Description = "Extracts the substring of the string with the specified start and end position";
+            Description = "Extracts the substring of the string with the specified start and end position.";
             StringDecimalDecimalString = (x, y, z) => x.Substring((int)y, (int)z);
         }
     }

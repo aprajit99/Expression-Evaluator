@@ -9,7 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "Sign";
             Category = "Mathematical Function";
-            Description = "Returns an integer that specify the sign of the number";
+            Description = "Returns an integer that specifes the sign of the numbery.";
             DecimalDecimal = x => x >= 0 ? 1 : -1;
         }
     }

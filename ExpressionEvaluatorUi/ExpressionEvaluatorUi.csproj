@@ -11,17 +11,27 @@
 	<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
     <ApplicationIcon />
     <StartupObject />
-  </PropertyGroup>
+  </PropertyGroup> 
+
+  <ItemGroup>
+    <None Remove="Images\close.png" />
+    <None Remove="Images\edit.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\close.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\edit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ExpressionEvaluator\ExpressionEvaluator.csproj">
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>ExpressionEvaluator.dll</IncludeAssets>
 	</ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Images\" />
   </ItemGroup>
 	<Target DependsOnTargets="ResolveReferences" Name="CopyProjectReferencesToPackage">
 		<ItemGroup>

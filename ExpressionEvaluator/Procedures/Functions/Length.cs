@@ -9,7 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "Length";
             Category = "String";
-            Description = "Returns the length of given string";
+            Description = "Returns the length of given string.";
             StringDecimal = x => x.Length;
         }
     }

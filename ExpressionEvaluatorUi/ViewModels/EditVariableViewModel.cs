@@ -84,9 +84,9 @@ namespace ExpressionEvaluatorUi.ViewModels
         }
         public void LoadVariableDetails()
         {
-            Name = FormulaEditorHelper.Instance.SelectedVariable_Copy.Name;
-            Type = FormulaEditorHelper.Instance.SelectedVariable_Copy.Type;
-            Description = FormulaEditorHelper.Instance.SelectedVariable_Copy.Description;
+            Name = FormulaEditorVM.OldVariable.Name;
+            Type = FormulaEditorVM.OldVariable.Type;
+            Description = FormulaEditorVM.OldVariable.Description;
             IsEnabled = false;
         }
         public void CreateUpdatedVariable()

@@ -49,7 +49,7 @@
                    Text="Description : "/>
         <TextBox     Grid.Row="2"
                      Grid.Column="1"
-                     Text="{Binding Description,Mode=TwoWay}"/>
+                     Text="{Binding Description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
         <StackPanel Grid.Row="3"
                     Grid.ColumnSpan="2"
                     Orientation="Horizontal"

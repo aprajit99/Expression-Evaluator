@@ -9,6 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "TotalHours";
             Category = "Date/Time";
+            Description = "Returns the total no. of hours between two given timestamps.";
             TimespanDecimal = x => (decimal)x.TotalHours;
         }
     }

@@ -9,6 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "TotalDays";
             Category = "Date/Time";
+            Description = "Returns the total no. of days between two given timestamps.";
             TimespanDecimal = x => (decimal)x.TotalDays;
         }
     }

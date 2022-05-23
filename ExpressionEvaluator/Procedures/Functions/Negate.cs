@@ -9,7 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "Negate";
             Category = "Mathematical Function";
-            Description = "Returns the result of multiplying the specified value by negative one";
+            Description = "Returns the result of multiplying the specified value by negative one.";
             DecimalDecimal = x => -1 * x;
         }
     }

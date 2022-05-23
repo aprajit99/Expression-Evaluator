@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExpressionEvaluatorUi\ExpressionEvaluatorUi.csproj" />
+    <ProjectReference Include="..\ExpressionEvaluatorUi\ExpressionEvaluatorUI.csproj" />
     <ProjectReference Include="..\ExpressionEvaluator\ExpressionEvaluator.csproj" />
   </ItemGroup>
 

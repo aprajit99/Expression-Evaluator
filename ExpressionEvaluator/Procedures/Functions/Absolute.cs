@@ -11,7 +11,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "Absolute";
             Category = "Mathematical Function";
-            Description = "Return the absolute value of a specified number";
+            Description = "Returns the absolute value of a specified number.";
             DecimalDecimal = x => {
                 double dblResult = Math.Abs((double)x);
                 if (double.IsNaN(dblResult)) {

@@ -10,6 +10,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "Minutes";
             Category = "Date/Time";
+            Description = "Given the minutes as input, returns the minutes in DD:HH:MM:SS format.";
             DecimalTimespan = x => new TimeSpan((long)(x * TimeSpan.TicksPerMinute));
         }
     }

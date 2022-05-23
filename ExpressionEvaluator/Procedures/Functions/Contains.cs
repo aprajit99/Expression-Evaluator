@@ -9,7 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "Contains";
             Category = "String";
-            Description = "Check if the string contains the given substring";
+            Description = "Checks if the string contains the given substring.";
             StringStringBool = (x, y) => x.ToLower()
                 .Contains(y.ToLower());
         }
