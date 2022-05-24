@@ -9,6 +9,7 @@ namespace ExpressionEvaluator.Procedures.Functions
         {
             _name2 = "ToStringFormat";
             Category = "String";
+            Description = "Adds leading or trailing zeros to a no. and returns the string equivalent.";
             DecimalStringString = (x, y) => x.ToString(y);
         }
     }
